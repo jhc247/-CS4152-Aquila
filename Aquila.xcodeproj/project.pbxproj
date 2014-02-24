@@ -212,10 +212,6 @@
 		F102838418B7D2D400802C3B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F102838318B7D2D400802C3B /* AppDelegate.m */; };
 		F102838718B7D2D400802C3B /* DemoScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F102838618B7D2D400802C3B /* DemoScene.m */; };
 		F102838A18B7D2D400802C3B /* IntroScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F102838918B7D2D400802C3B /* IntroScene.m */; };
-		F102838E18B7D2D400802C3B /* NewtonScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F102838D18B7D2D400802C3B /* NewtonScene.m */; };
-		F102839118B7D2D400802C3B /* NewtonSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = F102839018B7D2D400802C3B /* NewtonSphere.m */; };
-		F102839418B7D2D400802C3B /* LightBulb.m in Sources */ = {isa = PBXBuildFile; fileRef = F102839318B7D2D400802C3B /* LightBulb.m */; };
-		F102839718B7D2D400802C3B /* Rope.m in Sources */ = {isa = PBXBuildFile; fileRef = F102839618B7D2D400802C3B /* Rope.m */; };
 		F102839918B7D2D400802C3B /* fire.plist in Resources */ = {isa = PBXBuildFile; fileRef = F102839818B7D2D400802C3B /* fire.plist */; };
 		F102839B18B7D2D400802C3B /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = F102839A18B7D2D400802C3B /* fire.png */; };
 		F102839D18B7D2D400802C3B /* newton-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = F102839C18B7D2D400802C3B /* newton-ipadhd.plist */; };
@@ -229,6 +225,7 @@
 		F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D518BAF918002F0B78 /* megagrunt.png */; };
 		F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D618BAF918002F0B78 /* monster2.png */; };
 		F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D918BB0067002F0B78 /* redcircle.png */; };
+		F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FE71A318BBABD00020DCD1 /* Aquila.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -670,15 +667,6 @@
 		F102838618B7D2D400802C3B /* DemoScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DemoScene.m; path = Classes/DemoScene.m; sourceTree = "<group>"; };
 		F102838818B7D2D400802C3B /* IntroScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IntroScene.h; path = Classes/IntroScene.h; sourceTree = "<group>"; };
 		F102838918B7D2D400802C3B /* IntroScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = IntroScene.m; path = Classes/IntroScene.m; sourceTree = "<group>"; };
-		F102838B18B7D2D400802C3B /* NewtonConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NewtonConstants.h; path = Classes/NewtonConstants.h; sourceTree = "<group>"; };
-		F102838C18B7D2D400802C3B /* NewtonScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NewtonScene.h; path = Classes/NewtonScene.h; sourceTree = "<group>"; };
-		F102838D18B7D2D400802C3B /* NewtonScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NewtonScene.m; path = Classes/NewtonScene.m; sourceTree = "<group>"; };
-		F102838F18B7D2D400802C3B /* NewtonSphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NewtonSphere.h; path = Classes/NewtonSphere.h; sourceTree = "<group>"; };
-		F102839018B7D2D400802C3B /* NewtonSphere.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NewtonSphere.m; path = Classes/NewtonSphere.m; sourceTree = "<group>"; };
-		F102839218B7D2D400802C3B /* LightBulb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBulb.h; path = Classes/LightBulb.h; sourceTree = "<group>"; };
-		F102839318B7D2D400802C3B /* LightBulb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LightBulb.m; path = Classes/LightBulb.m; sourceTree = "<group>"; };
-		F102839518B7D2D400802C3B /* Rope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rope.h; path = Classes/Rope.h; sourceTree = "<group>"; };
-		F102839618B7D2D400802C3B /* Rope.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Rope.m; path = Classes/Rope.m; sourceTree = "<group>"; };
 		F102839818B7D2D400802C3B /* fire.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = fire.plist; path = Resources/fire.plist; sourceTree = "<group>"; };
 		F102839A18B7D2D400802C3B /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = Resources/fire.png; sourceTree = "<group>"; };
 		F102839C18B7D2D400802C3B /* newton-ipadhd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "newton-ipadhd.plist"; path = "Resources/newton-ipadhd.plist"; sourceTree = "<group>"; };
@@ -688,12 +676,13 @@
 		F10283A418B7D2D400802C3B /* newton.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = newton.plist; path = Resources/newton.plist; sourceTree = "<group>"; };
 		F10283A618B7D2D400802C3B /* newton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newton.png; path = Resources/newton.png; sourceTree = "<group>"; };
 		F10283B118B7D96200802C3B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		F10283B218B84B4B00802C3B /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		F10283B318BAB78D00802C3B /* Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Circle.png; path = Resources/Icons/Circle.png; sourceTree = "<group>"; };
 		F1C2C4EF18BABF87002F0B78 /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Resources/Icons/sword.png; sourceTree = "<group>"; };
 		F1C2C6D518BAF918002F0B78 /* megagrunt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt.png; path = Resources/Icons/megagrunt.png; sourceTree = "<group>"; };
 		F1C2C6D618BAF918002F0B78 /* monster2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster2.png; path = Resources/Icons/monster2.png; sourceTree = "<group>"; };
 		F1C2C6D918BB0067002F0B78 /* redcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redcircle.png; path = Resources/Icons/redcircle.png; sourceTree = "<group>"; };
+		F1FE719F18BBA9D70020DCD1 /* Aquila.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aquila.h; sourceTree = "<group>"; };
+		F1FE71A318BBABD00020DCD1 /* Aquila.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Aquila.m; path = Classes/Aquila.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1598,19 +1587,11 @@
 				F102838318B7D2D400802C3B /* AppDelegate.m */,
 				F102838518B7D2D400802C3B /* DemoScene.h */,
 				F102838618B7D2D400802C3B /* DemoScene.m */,
-				F10283B218B84B4B00802C3B /* Player.h */,
+				F1FE719F18BBA9D70020DCD1 /* Aquila.h */,
+				F1FE71A318BBABD00020DCD1 /* Aquila.m */,
 				F10283B118B7D96200802C3B /* Constants.h */,
 				F102838818B7D2D400802C3B /* IntroScene.h */,
 				F102838918B7D2D400802C3B /* IntroScene.m */,
-				F102838B18B7D2D400802C3B /* NewtonConstants.h */,
-				F102838C18B7D2D400802C3B /* NewtonScene.h */,
-				F102838D18B7D2D400802C3B /* NewtonScene.m */,
-				F102838F18B7D2D400802C3B /* NewtonSphere.h */,
-				F102839018B7D2D400802C3B /* NewtonSphere.m */,
-				F102839218B7D2D400802C3B /* LightBulb.h */,
-				F102839318B7D2D400802C3B /* LightBulb.m */,
-				F102839518B7D2D400802C3B /* Rope.h */,
-				F102839618B7D2D400802C3B /* Rope.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1868,10 +1849,7 @@
 				F102838418B7D2D400802C3B /* AppDelegate.m in Sources */,
 				F102838718B7D2D400802C3B /* DemoScene.m in Sources */,
 				F102838A18B7D2D400802C3B /* IntroScene.m in Sources */,
-				F102838E18B7D2D400802C3B /* NewtonScene.m in Sources */,
-				F102839118B7D2D400802C3B /* NewtonSphere.m in Sources */,
-				F102839418B7D2D400802C3B /* LightBulb.m in Sources */,
-				F102839718B7D2D400802C3B /* Rope.m in Sources */,
+				F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

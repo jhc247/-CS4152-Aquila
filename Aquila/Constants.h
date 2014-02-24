@@ -6,13 +6,16 @@
 //  Copyright (c) 2014 Seven Layer Games. All rights reserved.
 //
 
-#ifndef Constants_h
-#define Constants_h
+static const float AQUILA_WALK_SPEED = 200;
+static const float AQUILA_FLICK_SPEED = 500;
+static const float AQUILA_MASS = 1;
+static const float AQUILA_MOVING_MASS = 100;
 
-#define AQUILA_WALK_SPEED 200
-#define AQUILA_FLICK_SPEED 500
-#define FLICK_TRESHHOLD 50
-#define FLICK_LENGTH 200
+static const float FLICK_TRESHHOLD = 50;
+static const float FLICK_LENGTH = 200;
 
+static const float WALK_THRESHOLD = 20;
 
-#endif
+static const NSString *CollisionAquila = @"aquila";
+//static const NSString *NewtonSphereCollisionOutline = @"outline";
+//static const NSString *NewtonSphereCollisionRope = @"rope";

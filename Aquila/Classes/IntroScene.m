@@ -39,7 +39,7 @@
     CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.4f green:0.4f blue:0.4f alpha:1.0f]];
     [self addChild:background];
     
-    // Hello world
+    // Title
     CCLabelTTF *label = [CCLabelTTF labelWithString:@"Aquila" fontName:@"Chalkduster" fontSize:36.0f];
     label.positionType = CCPositionTypeNormalized;
     label.color = [CCColor blackColor];
@@ -52,8 +52,7 @@
     playButton.position = ccp(0.5f, 0.35f);
     [playButton setTarget:self selector:@selector(onPlayClicked:)];
     [self addChild:playButton];
-
-	
+    
     // done
 	return self;
 }
