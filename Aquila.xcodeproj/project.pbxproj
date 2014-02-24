@@ -226,6 +226,9 @@
 		F10283A718B7D2D400802C3B /* newton.png in Resources */ = {isa = PBXBuildFile; fileRef = F10283A618B7D2D400802C3B /* newton.png */; };
 		F10283B418BAB78D00802C3B /* Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F10283B318BAB78D00802C3B /* Circle.png */; };
 		F1C2C4F018BABF87002F0B78 /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C4EF18BABF87002F0B78 /* sword.png */; };
+		F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D518BAF918002F0B78 /* megagrunt.png */; };
+		F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D618BAF918002F0B78 /* monster2.png */; };
+		F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D918BB0067002F0B78 /* redcircle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -688,6 +691,9 @@
 		F10283B218B84B4B00802C3B /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		F10283B318BAB78D00802C3B /* Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Circle.png; path = Resources/Icons/Circle.png; sourceTree = "<group>"; };
 		F1C2C4EF18BABF87002F0B78 /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Resources/Icons/sword.png; sourceTree = "<group>"; };
+		F1C2C6D518BAF918002F0B78 /* megagrunt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt.png; path = Resources/Icons/megagrunt.png; sourceTree = "<group>"; };
+		F1C2C6D618BAF918002F0B78 /* monster2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster2.png; path = Resources/Icons/monster2.png; sourceTree = "<group>"; };
+		F1C2C6D918BB0067002F0B78 /* redcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redcircle.png; path = Resources/Icons/redcircle.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -782,7 +788,10 @@
 		F10280FC18B7D2CA00802C3B /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F1C2C6D518BAF918002F0B78 /* megagrunt.png */,
+				F1C2C6D618BAF918002F0B78 /* monster2.png */,
 				F1C2C4EF18BABF87002F0B78 /* sword.png */,
+				F1C2C6D918BB0067002F0B78 /* redcircle.png */,
 				F10280FD18B7D2CA00802C3B /* Icon.png */,
 				F10280FF18B7D2CA00802C3B /* Icon@2x.png */,
 				F102810118B7D2CA00802C3B /* Icon-72.png */,
@@ -1708,6 +1717,9 @@
 				F10283A718B7D2D400802C3B /* newton.png in Resources */,
 				F10283B418BAB78D00802C3B /* Circle.png in Resources */,
 				F1C2C4F018BABF87002F0B78 /* sword.png in Resources */,
+				F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */,
+				F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */,
+				F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
