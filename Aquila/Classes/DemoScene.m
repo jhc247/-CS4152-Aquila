@@ -17,6 +17,8 @@
 #import "Aquila.h"
 #import "AIActor.h"
 #import "PatrollingAIBehavior.h"
+#import "CrystalSet.h"
+#import "Crystal.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - DemoScene
@@ -27,6 +29,7 @@
     Aquila *_aquila;
     CCPhysicsNode *_physicsWorld;
     AIActor *_dumbmonster;
+    CrystalSet* _crystals;
     
     bool green;
     CCSprite *greencircle;
@@ -103,6 +106,16 @@
     [_physicsWorld addChild:_dumbmonster.sprite];
     [_dumbmonster startAI];
     
+    // Create crystals
+    NSValue *loc1 = [NSValue valueWithCGPoint:ccp(self.contentSize.width/2, self.contentSize.height/3)];
+    NSValue *loc2 = [NSValue valueWithCGPoint:ccp(4*self.contentSize.width/5, 4*self.contentSize.height/5)];
+    NSNumber *state1 = [NSNumber numberWithInt:On];
+    NSNumber *state2 = [NSNumber numberWithInt:Off];
+    
+    NSArray* crystalPositions = [[NSArray alloc] initWithObjects:loc1, loc2, nil];
+    NSArray* crystalStates = [[NSArray alloc] initWithObjects:state1,state2, nil];
+    
+    _crystals = [CrystalSet createCrystalSet:crystalPositions initialStates:crystalStates physicsNode:_physicsWorld];
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -291,8 +304,8 @@
     [self addChild:label];
 }
 
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(CCNode *)monster aquilaCollision:(CCNode *)aqui {
-    CCLOG(@"Monster state: %d", _dumbmonster.state);
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(AIActor *)monster aquilaCollision:(Aquila *)aqui {
+    CCLOG(@"Aquilla collided with monster");
     if (_aquila.state != Dashing && _dumbmonster.state == Normal) {
         [self gameOver];
     }
@@ -309,7 +322,20 @@
     return YES;
 }
 
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal {
+    CCLOG(@"Aquilla collided with crystal");
+    [_aquila stopAllActions];
+    _aquila.state = Standing;
+    [crystal flipState];
+    return YES;
+}
+
 - (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event {
+    
+}
+
+- (void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal {
+    CCLOG(@"Aquilla seperated from crystal");
     
 }
 

@@ -223,10 +223,14 @@
 		F10283A518B7D2D400802C3B /* newton.plist in Resources */ = {isa = PBXBuildFile; fileRef = F10283A418B7D2D400802C3B /* newton.plist */; };
 		F10283A718B7D2D400802C3B /* newton.png in Resources */ = {isa = PBXBuildFile; fileRef = F10283A618B7D2D400802C3B /* newton.png */; };
 		F10283B418BAB78D00802C3B /* Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F10283B318BAB78D00802C3B /* Circle.png */; };
+		F155AE0B18BDD0AB005114A0 /* ice_crystal1.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0918BDD0AB005114A0 /* ice_crystal1.png */; };
+		F155AE0C18BDD0AB005114A0 /* ice_crystal_off1.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0A18BDD0AB005114A0 /* ice_crystal_off1.png */; };
 		F1C2C4F018BABF87002F0B78 /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C4EF18BABF87002F0B78 /* sword.png */; };
 		F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D518BAF918002F0B78 /* megagrunt.png */; };
 		F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D618BAF918002F0B78 /* monster2.png */; };
 		F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D918BB0067002F0B78 /* redcircle.png */; };
+		F1F0E98F18BD93650092B04B /* CrystalSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F0E98E18BD93650092B04B /* CrystalSet.m */; };
+		F1F0E99218BD94280092B04B /* Crystal.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F0E99118BD94280092B04B /* Crystal.m */; };
 		F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FE71A318BBABD00020DCD1 /* Aquila.m */; };
 /* End PBXBuildFile section */
 
@@ -684,10 +688,17 @@
 		F10283A618B7D2D400802C3B /* newton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newton.png; path = Resources/newton.png; sourceTree = "<group>"; };
 		F10283B118B7D96200802C3B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		F10283B318BAB78D00802C3B /* Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Circle.png; path = Resources/Icons/Circle.png; sourceTree = "<group>"; };
+		F155AE0918BDD0AB005114A0 /* ice_crystal1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ice_crystal1.png; path = Resources/Icons/ice_crystal1.png; sourceTree = "<group>"; };
+		F155AE0A18BDD0AB005114A0 /* ice_crystal_off1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ice_crystal_off1.png; path = Resources/Icons/ice_crystal_off1.png; sourceTree = "<group>"; };
 		F1C2C4EF18BABF87002F0B78 /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Resources/Icons/sword.png; sourceTree = "<group>"; };
 		F1C2C6D518BAF918002F0B78 /* megagrunt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt.png; path = Resources/Icons/megagrunt.png; sourceTree = "<group>"; };
 		F1C2C6D618BAF918002F0B78 /* monster2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster2.png; path = Resources/Icons/monster2.png; sourceTree = "<group>"; };
 		F1C2C6D918BB0067002F0B78 /* redcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redcircle.png; path = Resources/Icons/redcircle.png; sourceTree = "<group>"; };
+		F1F0E98E18BD93650092B04B /* CrystalSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrystalSet.m; sourceTree = "<group>"; };
+		F1F0E99018BD94280092B04B /* Crystal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crystal.h; sourceTree = "<group>"; };
+		F1F0E99118BD94280092B04B /* Crystal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crystal.m; sourceTree = "<group>"; };
+		F1F0E99318BDADFC0092B04B /* CrystalSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrystalSet.h; sourceTree = "<group>"; };
+		F1F0E99518BDB2040092B04B /* Level.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Level.h; path = ../Level.h; sourceTree = "<group>"; };
 		F1FE719F18BBA9D70020DCD1 /* Aquila.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aquila.h; sourceTree = "<group>"; };
 		F1FE71A318BBABD00020DCD1 /* Aquila.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Aquila.m; path = Classes/Aquila.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -789,6 +800,8 @@
 				F1C2C4EF18BABF87002F0B78 /* sword.png */,
 				F1C2C6D918BB0067002F0B78 /* redcircle.png */,
 				F10280FD18B7D2CA00802C3B /* Icon.png */,
+				F155AE0918BDD0AB005114A0 /* ice_crystal1.png */,
+				F155AE0A18BDD0AB005114A0 /* ice_crystal_off1.png */,
 				F10280FF18B7D2CA00802C3B /* Icon@2x.png */,
 				F102810118B7D2CA00802C3B /* Icon-72.png */,
 				F102810318B7D2CA00802C3B /* Icon-72@2x.png */,
@@ -1591,9 +1604,14 @@
 			isa = PBXGroup;
 			children = (
 				F102838218B7D2D400802C3B /* AppDelegate.h */,
+				F1F0E99518BDB2040092B04B /* Level.h */,
 				F102838318B7D2D400802C3B /* AppDelegate.m */,
 				F102838518B7D2D400802C3B /* DemoScene.h */,
 				F102838618B7D2D400802C3B /* DemoScene.m */,
+				F1F0E99018BD94280092B04B /* Crystal.h */,
+				F1F0E99318BDADFC0092B04B /* CrystalSet.h */,
+				F1F0E99118BD94280092B04B /* Crystal.m */,
+				F1F0E98E18BD93650092B04B /* CrystalSet.m */,
 				F1FE719F18BBA9D70020DCD1 /* Aquila.h */,
 				F1FE71A318BBABD00020DCD1 /* Aquila.m */,
 				F10283B118B7D96200802C3B /* Constants.h */,
@@ -1713,6 +1731,8 @@
 				F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */,
 				F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */,
 				F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */,
+				F155AE0B18BDD0AB005114A0 /* ice_crystal1.png in Resources */,
+				F155AE0C18BDD0AB005114A0 /* ice_crystal_off1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1864,6 +1884,8 @@
 				F102838718B7D2D400802C3B /* DemoScene.m in Sources */,
 				F102838A18B7D2D400802C3B /* IntroScene.m in Sources */,
 				F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */,
+				F1F0E98F18BD93650092B04B /* CrystalSet.m in Sources */,
+				F1F0E99218BD94280092B04B /* Crystal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,7 +35,6 @@
 }
 
 -(void)initAquila: (CGPoint) position {
-    // Apple recommend assigning self with supers return value, and handling self not created
     
     // enable touch for Aquila
     self.userInteractionEnabled = YES;
@@ -44,7 +43,7 @@
     self.zOrder = 5;
     
     // Create physics body
-    CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0];
+    CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0.0f];
     body.collisionType = @"aquilaCollision";
     body.collisionGroup = @"aquilaGroup";
     body.mass = AQUILA_MASS;
