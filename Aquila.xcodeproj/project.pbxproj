@@ -227,6 +227,7 @@
 		F155AE0C18BDD0AB005114A0 /* ice_crystal_off1.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0A18BDD0AB005114A0 /* ice_crystal_off1.png */; };
 		F155AE0E18BDE6A9005114A0 /* megagrunt_stunned.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0D18BDE6A9005114A0 /* megagrunt_stunned.png */; };
 		F155AE1118BDEE1B005114A0 /* FollowAIBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = F155AE1018BDEE1B005114A0 /* FollowAIBehavior.m */; };
+		F1B98D4118BE400300C8772B /* ControlScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B98D4018BE400300C8772B /* ControlScene.m */; };
 		F1C2C4F018BABF87002F0B78 /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C4EF18BABF87002F0B78 /* sword.png */; };
 		F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D518BAF918002F0B78 /* megagrunt.png */; };
 		F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D618BAF918002F0B78 /* monster2.png */; };
@@ -234,6 +235,7 @@
 		F1CF595B18BE070E007272FD /* monster2_stunned.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF595A18BE070E007272FD /* monster2_stunned.png */; };
 		F1F0E98F18BD93650092B04B /* CrystalSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F0E98E18BD93650092B04B /* CrystalSet.m */; };
 		F1F0E99218BD94280092B04B /* Crystal.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F0E99118BD94280092B04B /* Crystal.m */; };
+		F1F3B5E518BE420400359C91 /* MonsterScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F3B5E418BE420400359C91 /* MonsterScene.m */; };
 		F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FE71A318BBABD00020DCD1 /* Aquila.m */; };
 /* End PBXBuildFile section */
 
@@ -696,6 +698,8 @@
 		F155AE0D18BDE6A9005114A0 /* megagrunt_stunned.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt_stunned.png; path = Resources/Icons/megagrunt_stunned.png; sourceTree = "<group>"; };
 		F155AE0F18BDEE1A005114A0 /* FollowAIBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowAIBehavior.h; sourceTree = "<group>"; };
 		F155AE1018BDEE1B005114A0 /* FollowAIBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowAIBehavior.m; sourceTree = "<group>"; };
+		F1B98D3F18BE400300C8772B /* ControlScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ControlScene.h; path = ../ControlScene.h; sourceTree = "<group>"; };
+		F1B98D4018BE400300C8772B /* ControlScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ControlScene.m; path = ../ControlScene.m; sourceTree = "<group>"; };
 		F1C2C4EF18BABF87002F0B78 /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Resources/Icons/sword.png; sourceTree = "<group>"; };
 		F1C2C6D518BAF918002F0B78 /* megagrunt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt.png; path = Resources/Icons/megagrunt.png; sourceTree = "<group>"; };
 		F1C2C6D618BAF918002F0B78 /* monster2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster2.png; path = Resources/Icons/monster2.png; sourceTree = "<group>"; };
@@ -706,6 +710,8 @@
 		F1F0E99118BD94280092B04B /* Crystal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crystal.m; sourceTree = "<group>"; };
 		F1F0E99318BDADFC0092B04B /* CrystalSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrystalSet.h; sourceTree = "<group>"; };
 		F1F0E99518BDB2040092B04B /* Level.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Level.h; path = ../Level.h; sourceTree = "<group>"; };
+		F1F3B5E318BE420400359C91 /* MonsterScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterScene.h; sourceTree = "<group>"; };
+		F1F3B5E418BE420400359C91 /* MonsterScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterScene.m; sourceTree = "<group>"; };
 		F1FE719F18BBA9D70020DCD1 /* Aquila.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aquila.h; sourceTree = "<group>"; };
 		F1FE71A318BBABD00020DCD1 /* Aquila.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Aquila.m; path = Classes/Aquila.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1617,6 +1623,10 @@
 				F102838318B7D2D400802C3B /* AppDelegate.m */,
 				F102838518B7D2D400802C3B /* DemoScene.h */,
 				F102838618B7D2D400802C3B /* DemoScene.m */,
+				F1B98D3F18BE400300C8772B /* ControlScene.h */,
+				F1B98D4018BE400300C8772B /* ControlScene.m */,
+				F1F3B5E318BE420400359C91 /* MonsterScene.h */,
+				F1F3B5E418BE420400359C91 /* MonsterScene.m */,
 				F1F0E99018BD94280092B04B /* Crystal.h */,
 				F1F0E99318BDADFC0092B04B /* CrystalSet.h */,
 				F1F0E99118BD94280092B04B /* Crystal.m */,
@@ -1900,6 +1910,8 @@
 				F1F0E98F18BD93650092B04B /* CrystalSet.m in Sources */,
 				F1F0E99218BD94280092B04B /* Crystal.m in Sources */,
 				F155AE1118BDEE1B005114A0 /* FollowAIBehavior.m in Sources */,
+				F1B98D4118BE400300C8772B /* ControlScene.m in Sources */,
+				F1F3B5E518BE420400359C91 /* MonsterScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

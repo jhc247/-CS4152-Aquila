@@ -11,6 +11,8 @@
 #import "IntroScene.h"
 #import "DemoScene.h"
 #import "NewtonScene.h"
+#import "ControlScene.h"
+#import "MonsterScene.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - IntroScene
@@ -40,16 +42,30 @@
     [self addChild:background];
     
     // Title
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Aquila" fontName:@"Chalkduster" fontSize:36.0f];
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Aquila" fontName:@"Chalkduster" fontSize:80.0f];
     label.positionType = CCPositionTypeNormalized;
     label.color = [CCColor blackColor];
-    label.position = ccp(0.5f, 0.8f); // Middle of screen
+    label.position = ccp(0.5f, 0.6f); // Middle of screen
     [self addChild:label];
     
+    // Controls
+    CCButton *controlsButton = [CCButton buttonWithTitle:@"[ Controls ]" fontName:@"Verdana-Bold" fontSize:30.0f];
+    controlsButton.positionType = CCPositionTypeNormalized;
+    controlsButton.position = ccp(0.25f, 0.35f);
+    [controlsButton setTarget:self selector:@selector(onControlsClicked:)];
+    [self addChild:controlsButton];
+    
+    // Monster
+    CCButton *monsterButton = [CCButton buttonWithTitle:@"[ Monsters ]" fontName:@"Verdana-Bold" fontSize:30.0f];
+    monsterButton.positionType = CCPositionTypeNormalized;
+    monsterButton.position = ccp(0.5f, 0.35f);
+    [monsterButton setTarget:self selector:@selector(onMonsterClicked:)];
+    [self addChild:monsterButton];
+    
     // Demo
-    CCButton *playButton = [CCButton buttonWithTitle:@"[ Play ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    CCButton *playButton = [CCButton buttonWithTitle:@"[ Demo ]" fontName:@"Verdana-Bold" fontSize:30.0f];
     playButton.positionType = CCPositionTypeNormalized;
-    playButton.position = ccp(0.5f, 0.35f);
+    playButton.position = ccp(0.75f, 0.35f);
     [playButton setTarget:self selector:@selector(onPlayClicked:)];
     [self addChild:playButton];
     
@@ -66,6 +82,20 @@
     // start spinning scene with transition
     [[CCDirector sharedDirector] replaceScene:[DemoScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
+}
+
+- (void)onMonsterClicked:(id)sender
+{
+    // start spinning scene with transition
+    [[CCDirector sharedDirector] replaceScene:[MonsterScene scene]
+                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:1.0f]];
+}
+
+- (void)onControlsClicked:(id)sender
+{
+    // start spinning scene with transition
+    [[CCDirector sharedDirector] replaceScene:[ControlScene scene]
+                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
 }
 
 

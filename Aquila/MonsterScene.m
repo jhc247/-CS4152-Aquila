@@ -1,13 +1,12 @@
 //
-//  DemoScene.m
+//  MonsterScene.m
 //  Aquila
 //
-//  Created by Jcard on 2/21/14.
-//  Copyright Seven Layer Games 2014. All rights reserved.
+//  Created by Jcard on 2/26/14.
+//  Copyright 2014 Seven Layer Games. All rights reserved.
 //
-// -----------------------------------------------------------------------
 
-#import "DemoScene.h"
+#import "MonsterScene.h"
 #import "IntroScene.h"
 #import "Constants.h"
 #import "CCDrawingPrimitives.h"
@@ -21,10 +20,10 @@
 #import "Crystal.h"
 
 // -----------------------------------------------------------------------
-#pragma mark - DemoScene
+#pragma mark - MonsterScene
 // -----------------------------------------------------------------------
 
-@implementation DemoScene
+@implementation MonsterScene
 {
     Aquila *_aquila;
     CCPhysicsNode *_physicsWorld;
@@ -50,7 +49,7 @@
 #pragma mark - Create & Destroy
 // -----------------------------------------------------------------------
 
-+ (DemoScene *)scene
++ (MonsterScene *)scene
 {
     return [[self alloc] init];
 }
@@ -102,13 +101,13 @@
     NSString* dumb_stunned = @"megagrunt_stunned.png";
     _dumbmonster = [AIActor spriteWithImageNamed:dumb_normal];
     PatrollingAIBehavior *behavior = [[PatrollingAIBehavior alloc] initWithPoints:startPos :
-    ccp(self.contentSize.width/5, 4*self.contentSize.height/5) monster:_dumbmonster];
+                                      ccp(self.contentSize.width/5, 4*self.contentSize.height/5) monster:_dumbmonster];
     [_dumbmonster initWithBehavior:behavior :startPos normalSprite:dumb_normal stunnedSprite:dumb_stunned];
     [_physicsWorld addChild:_dumbmonster];
     [_dumbmonster startAI];
     
     // Add another monster
-    CGPoint startPos2 = ccp(self.contentSize.width/2,4*self.contentSize.height/5);
+    CGPoint startPos2 = ccp(3*self.contentSize.width/4,4*self.contentSize.height/5);
     NSString* other_normal = @"monster2.png";
     NSString* other_stunned = @"monster2_stunned.png";
     _othermonster = [AIActor spriteWithImageNamed:other_normal];
@@ -116,50 +115,6 @@
     [_othermonster initWithBehavior:otherbehavior :startPos2 normalSprite:other_normal stunnedSprite:other_stunned];
     [_physicsWorld addChild:_othermonster];
     [_othermonster startAI];
-    
-    // Add third monster
-    CGPoint startPos3 = ccp(3*self.contentSize.width/4,self.contentSize.height/4);
-    NSString* third_normal = @"monster2.png";
-    NSString* third_stunned = @"monster2_stunned.png";
-    _thirdmonster = [AIActor spriteWithImageNamed:third_normal];
-    FollowAIBehavior *thirdbehavior = [[FollowAIBehavior alloc] init:_aquila :_thirdmonster];
-    [_thirdmonster initWithBehavior:thirdbehavior :startPos3 normalSprite:third_normal stunnedSprite:third_stunned];
-    solved = false;
-    
-    // Create crystals
-    // Positions
-    NSValue *loc1 = [NSValue valueWithCGPoint:ccp(self.contentSize.width/2, self.contentSize.height/5)];
-    NSValue *loc2 = [NSValue valueWithCGPoint:ccp(4*self.contentSize.width/5, 4*self.contentSize.height/5)];
-    NSValue *loc3 = [NSValue valueWithCGPoint:ccp(1*self.contentSize.width/5, 4*self.contentSize.height/5)];
-    NSValue *loc4 = [NSValue valueWithCGPoint:ccp(4*self.contentSize.width/5, 2*self.contentSize.height/5)];
-    // Initial States
-    NSNumber *state1 = [NSNumber numberWithInt:Off];
-    NSNumber *state2 = [NSNumber numberWithInt:On];
-    NSNumber *state3 = [NSNumber numberWithInt:On];
-    NSNumber *state4 = [NSNumber numberWithInt:On];
-    // Links
-    /*
-     Pink Crystal = Crystal 1    linked to: 2
-     Purple Crystal = Crystal 2  linked to: 3
-     Orange Crystal = Crystal 3  linked to:
-     Blue Crystal = Crystal 4    linked to: 3, 1
-     
-     The Pink Crystal activates the Purple Crystal as well.
-     The Purple Crystal activates the Orange Crystal as well.
-     The Blue Crystal activates both the Orange and Pink Crystals as well.
-     */
-    NSArray *link1 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:1], nil];
-    NSArray *link2 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:2], nil];
-    NSArray *link3 = [[NSArray alloc] initWithObjects: nil];
-    NSArray *link4 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
-                                                      [NSNumber numberWithInt:2], nil];
-                      
-    NSArray* crystalPositions = [[NSArray alloc] initWithObjects:loc1, loc2, loc3, loc4, nil];
-    NSArray* crystalStates = [[NSArray alloc] initWithObjects:state1,state2,state3,state4,nil];
-    NSArray* crystalLinks = [[NSArray alloc] initWithObjects:link1, link2,link3,link4, nil];
-    
-    _crystals = [CrystalSet createCrystalSet:crystalPositions initialStates:crystalStates physicsNode:_physicsWorld linkedCrystals:crystalLinks level:self];
-    
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -174,7 +129,7 @@
     debugButton.position = ccp(0.90f, 0.05f); // Bottom Right of screen
     [debugButton setTarget:self selector:@selector(onDebugClicked:)];
     [self addChild:debugButton];
-
+    
     walking = false;
     ignore = false;
     
@@ -287,8 +242,8 @@
         _aquila.currentWalk = actions;
         // Log touch location
         CCLOG(@"Aquila walking to @ %@",NSStringFromCGPoint(targetPoint));
-
-    }    
+        
+    }
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
@@ -412,13 +367,13 @@
 {
     // back to intro scene with transition
     [[CCDirector sharedDirector] replaceScene:[IntroScene scene]
-                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
+                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionUp duration:1.0f]];
 }
 
 - (void)onResetClicked:(id)sender
 {
     // back to demo scene with transition
-    [[CCDirector sharedDirector] replaceScene:[DemoScene scene]
+    [[CCDirector sharedDirector] replaceScene:[MonsterScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:0.5f]];
 }
 
