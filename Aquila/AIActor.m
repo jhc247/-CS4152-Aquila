@@ -8,37 +8,52 @@
 
 #import "AIActor.h"
 
-@implementation AIActor
+@implementation AIActor : CCSprite
 {
     NSObject<AIBehaving>*   _behavior;
+    NSString* normalSprite;
+    NSString* stunnedSprite;
 }
 
-- (id) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CCSprite*) sprt
+- (void) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CGPoint)position normalSprite:(NSString*) normal stunnedSprite:(NSString*) stunned
 {
+    self.position = position;
+    
+    CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0];
+    body.collisionGroup = @"monsterGroup";
+    body.collisionType = @"monsterCollision";
+    
+    self.physicsBody = body;
     _behavior = behavior;
-    _state = Normal;
-    self.sprite = sprt;
-    return self;
-}
-
-
-- (id) addPhysics:(CGPoint)position :(CCPhysicsBody*)body :(NSString*)group :(NSString*)type
-{
-    self.sprite.position = position;
-    self.sprite.physicsBody = body;
-    self.sprite.physicsBody.collisionGroup = group;
-    self.sprite.physicsBody.collisionType = type;
-    return self;
+    self.state = Normal;
+    normalSprite = normal;
+    stunnedSprite = stunned;
 }
 
 - (void) startAI
 {
-    [self.sprite runAction:[_behavior generateAIAction]];
+    [_behavior generateAIAction];
+}
+
+- (void) restartAI
+{
+    self.state = Normal;
+    [self setTexture:[[CCSprite spriteWithImageNamed:normalSprite] texture]];
+    [self startAI];
+}
+
+- (void) stun
+{
+    self.state = Stunned;
+    [self setTexture:[[CCSprite spriteWithImageNamed:stunnedSprite] texture]];
+    [self stopAI];
 }
 
 - (void) stopAI
 {
-    [self.sprite stopAllActions];
+    [self stopAllActions];
 }
+
+
 
 @end

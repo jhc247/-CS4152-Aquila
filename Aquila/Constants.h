@@ -24,6 +24,8 @@ static const float AI_STUN_DURATION = 3.0;
 
 static const float CRYSTAL_MASS = 1000;
 
+static const float SLOW_SPEED = 100;
+
 
 static const NSString *CollisionAquila = @"aquila";
 //static const NSString *NewtonSphereCollisionOutline = @"outline";

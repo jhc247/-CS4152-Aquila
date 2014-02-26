@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "AIBehaving.h"
+#
 
 // -----------------------------------------------------------------------
 // Types of effects applied to the spheres
@@ -20,16 +21,16 @@ typedef NS_ENUM(NSInteger, AIState)
 
 // -----------------------------------------------------------------------
 
-@interface AIActor : NSObject
+@interface AIActor : CCSprite
 
 // -----------------------------------------------------------------------
 
-@property (nonatomic, assign) AIState   state;
-@property (nonatomic, assign) CCSprite*  sprite;
+@property (nonatomic, assign) AIState state;
 
-- (id) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CCSprite*) sprt;
-- (id) addPhysics:(CGPoint)position :(CCPhysicsBody*)body :(NSString*)group :(NSString*)type;
+- (void) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CGPoint)position normalSprite:(NSString*) normal stunnedSprite:(NSString*) stunned;
 - (void) startAI;
+- (void) restartAI;
 - (void) stopAI;
+- (void) stun;
 
 @end

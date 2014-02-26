@@ -13,5 +13,5 @@
  Protocol defining an AI's actions
  */
 @protocol AIBehaving <NSObject>
-- (CCAction*) generateAIAction;
+- (void) generateAIAction;
 @end

@@ -25,12 +25,13 @@ typedef NS_ENUM(NSInteger, CrystalState)
 // -----------------------------------------------------------------------
 
 @property (nonatomic, readonly, assign) CrystalState state;
-@property (readonly, assign) CrystalSet* crystalSet;
-
+@property (nonatomic, assign) CrystalSet* crystalSet;
+@property (nonatomic, readonly, strong) NSArray* linkedCrystals;
 
 // -----------------------------------------------------------------------
 
--(void)initCrystal: (CGPoint)position startState:(CrystalState) state;
--(void)flipState;
+-(void)initCrystal: (CGPoint)position startState:(CrystalState) state crystalSet:(CrystalSet*) set;
+-(void)flipState: (bool)flipOthers;
+-(void)setLinks: (NSArray*) links;
 
 @end

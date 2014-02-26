@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "AIBehaving.h"
+#import "AIActor.h"
 
 // Patrollers just create actions that define movement from a to b naivly
 @interface PatrollingAIBehavior : NSObject <AIBehaving>
-- (id) initWithPoints:(CGPoint) start :(CGPoint) end;
+- (id) initWithPoints:(CGPoint) start :(CGPoint) end monster:(AIActor*) mon;
 @end

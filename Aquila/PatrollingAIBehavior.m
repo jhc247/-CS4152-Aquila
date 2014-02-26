@@ -7,26 +7,29 @@
 //
 
 #import "PatrollingAIBehavior.h"
+#import "AIActor.h"
 
 @implementation PatrollingAIBehavior
 {
+    AIActor* _monster;
     CGPoint _start;
     CGPoint _end;
 }
 
-- (id) initWithPoints:(CGPoint) start :(CGPoint) end
+- (id) initWithPoints:(CGPoint) start :(CGPoint) end monster:(AIActor*) mon
 {
+    _monster = mon;
     _start = start;
     _end = end;
     return self;
 }
 
-- (CCAction *) generateAIAction
+- (void) generateAIAction
 {
     CCActionMoveTo* patrol1 = [CCActionMoveTo actionWithDuration:2 position:_end];
     CCActionMoveTo* patrol2 = [CCActionMoveTo actionWithDuration:2 position:_start];
     CCActionSequence* patrolAction = [CCActionSequence actionWithArray:@[patrol1, patrol2]];
-    return [CCActionRepeatForever actionWithAction:patrolAction];
+    [_monster runAction: [CCActionRepeatForever actionWithAction:patrolAction]];
 }
 
 @end

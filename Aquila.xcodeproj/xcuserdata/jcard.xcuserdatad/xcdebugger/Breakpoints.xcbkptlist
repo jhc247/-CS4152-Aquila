@@ -7,39 +7,39 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Aquila/Classes/DemoScene.m"
-         timestampString = "415088205.226524"
+         filePath = "Aquila/Crystal.m"
+         timestampString = "415104216.333615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "92"
-         endingLineNumber = "92"
-         landmarkName = "-init"
+         startingLineNumber = "44"
+         endingLineNumber = "44"
+         landmarkName = "-initCrystal:startState:crystalSet:"
          landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Aquila/CrystalSet.h"
-         timestampString = "415084978.441416"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "29"
-         endingLineNumber = "29"
-         landmarkName = "@interface CrystalSet"
-         landmarkType = "2">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Aquila/Crystal.m"
-         timestampString = "415088869.09909"
+         filePath = "Aquila/FollowAIBehavior.m"
+         timestampString = "415101655.562157"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "30"
          endingLineNumber = "30"
-         landmarkName = "-initCrystal:startState:"
+         landmarkName = "-generateAIAction"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Aquila/Classes/DemoScene.m"
+         timestampString = "415106846.236364"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "224"
+         endingLineNumber = "224"
+         landmarkName = "-solvedCrystals"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -47,25 +47,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Aquila/Crystal.m"
-         timestampString = "415088869.09909"
+         timestampString = "415104216.333615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "31"
-         endingLineNumber = "31"
-         landmarkName = "-initCrystal:startState:"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-flipState:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Aquila/Classes/Aquila.m"
-         timestampString = "415091212.579173"
+         filePath = "Aquila/Crystal.m"
+         timestampString = "415104216.333615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
-         landmarkName = "-initAquila:"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
+         landmarkName = "-flipState:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Aquila/Crystal.m"
+         timestampString = "415104216.333615"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "71"
+         endingLineNumber = "71"
+         landmarkName = "-flipState:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

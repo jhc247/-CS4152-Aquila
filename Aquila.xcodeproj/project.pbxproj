@@ -225,10 +225,13 @@
 		F10283B418BAB78D00802C3B /* Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F10283B318BAB78D00802C3B /* Circle.png */; };
 		F155AE0B18BDD0AB005114A0 /* ice_crystal1.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0918BDD0AB005114A0 /* ice_crystal1.png */; };
 		F155AE0C18BDD0AB005114A0 /* ice_crystal_off1.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0A18BDD0AB005114A0 /* ice_crystal_off1.png */; };
+		F155AE0E18BDE6A9005114A0 /* megagrunt_stunned.png in Resources */ = {isa = PBXBuildFile; fileRef = F155AE0D18BDE6A9005114A0 /* megagrunt_stunned.png */; };
+		F155AE1118BDEE1B005114A0 /* FollowAIBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = F155AE1018BDEE1B005114A0 /* FollowAIBehavior.m */; };
 		F1C2C4F018BABF87002F0B78 /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C4EF18BABF87002F0B78 /* sword.png */; };
 		F1C2C6D718BAF918002F0B78 /* megagrunt.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D518BAF918002F0B78 /* megagrunt.png */; };
 		F1C2C6D818BAF918002F0B78 /* monster2.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D618BAF918002F0B78 /* monster2.png */; };
 		F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2C6D918BB0067002F0B78 /* redcircle.png */; };
+		F1CF595B18BE070E007272FD /* monster2_stunned.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF595A18BE070E007272FD /* monster2_stunned.png */; };
 		F1F0E98F18BD93650092B04B /* CrystalSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F0E98E18BD93650092B04B /* CrystalSet.m */; };
 		F1F0E99218BD94280092B04B /* Crystal.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F0E99118BD94280092B04B /* Crystal.m */; };
 		F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FE71A318BBABD00020DCD1 /* Aquila.m */; };
@@ -690,10 +693,14 @@
 		F10283B318BAB78D00802C3B /* Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Circle.png; path = Resources/Icons/Circle.png; sourceTree = "<group>"; };
 		F155AE0918BDD0AB005114A0 /* ice_crystal1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ice_crystal1.png; path = Resources/Icons/ice_crystal1.png; sourceTree = "<group>"; };
 		F155AE0A18BDD0AB005114A0 /* ice_crystal_off1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ice_crystal_off1.png; path = Resources/Icons/ice_crystal_off1.png; sourceTree = "<group>"; };
+		F155AE0D18BDE6A9005114A0 /* megagrunt_stunned.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt_stunned.png; path = Resources/Icons/megagrunt_stunned.png; sourceTree = "<group>"; };
+		F155AE0F18BDEE1A005114A0 /* FollowAIBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowAIBehavior.h; sourceTree = "<group>"; };
+		F155AE1018BDEE1B005114A0 /* FollowAIBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowAIBehavior.m; sourceTree = "<group>"; };
 		F1C2C4EF18BABF87002F0B78 /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Resources/Icons/sword.png; sourceTree = "<group>"; };
 		F1C2C6D518BAF918002F0B78 /* megagrunt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = megagrunt.png; path = Resources/Icons/megagrunt.png; sourceTree = "<group>"; };
 		F1C2C6D618BAF918002F0B78 /* monster2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster2.png; path = Resources/Icons/monster2.png; sourceTree = "<group>"; };
 		F1C2C6D918BB0067002F0B78 /* redcircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redcircle.png; path = Resources/Icons/redcircle.png; sourceTree = "<group>"; };
+		F1CF595A18BE070E007272FD /* monster2_stunned.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster2_stunned.png; path = Resources/Icons/monster2_stunned.png; sourceTree = "<group>"; };
 		F1F0E98E18BD93650092B04B /* CrystalSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrystalSet.m; sourceTree = "<group>"; };
 		F1F0E99018BD94280092B04B /* Crystal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crystal.h; sourceTree = "<group>"; };
 		F1F0E99118BD94280092B04B /* Crystal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crystal.m; sourceTree = "<group>"; };
@@ -796,6 +803,7 @@
 			isa = PBXGroup;
 			children = (
 				F1C2C6D518BAF918002F0B78 /* megagrunt.png */,
+				F155AE0D18BDE6A9005114A0 /* megagrunt_stunned.png */,
 				F1C2C6D618BAF918002F0B78 /* monster2.png */,
 				F1C2C4EF18BABF87002F0B78 /* sword.png */,
 				F1C2C6D918BB0067002F0B78 /* redcircle.png */,
@@ -809,6 +817,7 @@
 				F102810718B7D2CA00802C3B /* Icon-76@2x.png */,
 				F102810918B7D2CA00802C3B /* Icon-120.png */,
 				F102810B18B7D2CA00802C3B /* Icon-iPad-Spotlight-iOS7@2x.png */,
+				F1CF595A18BE070E007272FD /* monster2_stunned.png */,
 				F102810D18B7D2CA00802C3B /* Icon-Small-50.png */,
 				F102810F18B7D2CA00802C3B /* Icon-Small.png */,
 				F10283B318BAB78D00802C3B /* Circle.png */,
@@ -1621,6 +1630,8 @@
 				36690CBA18BD43B100868BAB /* AIActor.m */,
 				36690CBC18BD454000868BAB /* AIBehaving.h */,
 				36690CBF18BD47C300868BAB /* PatrollingAIBehavior.h */,
+				F155AE0F18BDEE1A005114A0 /* FollowAIBehavior.h */,
+				F155AE1018BDEE1B005114A0 /* FollowAIBehavior.m */,
 				36690CC018BD47C300868BAB /* PatrollingAIBehavior.m */,
 			);
 			name = Classes;
@@ -1733,6 +1744,8 @@
 				F1C2C6DA18BB0067002F0B78 /* redcircle.png in Resources */,
 				F155AE0B18BDD0AB005114A0 /* ice_crystal1.png in Resources */,
 				F155AE0C18BDD0AB005114A0 /* ice_crystal_off1.png in Resources */,
+				F155AE0E18BDE6A9005114A0 /* megagrunt_stunned.png in Resources */,
+				F1CF595B18BE070E007272FD /* monster2_stunned.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1886,6 +1899,7 @@
 				F1FE71A418BBABD00020DCD1 /* Aquila.m in Sources */,
 				F1F0E98F18BD93650092B04B /* CrystalSet.m in Sources */,
 				F1F0E99218BD94280092B04B /* Crystal.m in Sources */,
+				F155AE1118BDEE1B005114A0 /* FollowAIBehavior.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

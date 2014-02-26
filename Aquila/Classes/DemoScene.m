@@ -17,6 +17,7 @@
 #import "Aquila.h"
 #import "AIActor.h"
 #import "PatrollingAIBehavior.h"
+#import "FollowAIBehavior.h"
 #import "CrystalSet.h"
 #import "Crystal.h"
 
@@ -29,6 +30,8 @@
     Aquila *_aquila;
     CCPhysicsNode *_physicsWorld;
     AIActor *_dumbmonster;
+    AIActor *_othermonster;
+    AIActor *_thirdmonster;
     CrystalSet* _crystals;
     
     bool green;
@@ -39,7 +42,7 @@
     CGPoint touchEnd;
     bool walking;
     bool ignore;
-    
+    bool solved;
     
     CGPoint walkTarget;
 }
@@ -96,26 +99,68 @@
     
     // Add dumb monster
     CGPoint startPos = ccp(self.contentSize.width/5,self.contentSize.height/5);
-    _dumbmonster = [[AIActor alloc] initWithBehavior:[[PatrollingAIBehavior alloc] initWithPoints :startPos
-                                                                                                  :ccp(self.contentSize.width/5, 4*self.contentSize.height/5)]
-                                                    :[CCSprite spriteWithImageNamed:@"megagrunt.png"]];
-    _dumbmonster = [_dumbmonster addPhysics    :startPos
-                                :[CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, _dumbmonster.sprite.contentSize} cornerRadius:0]
-                                :@"monsterGroup"
-                                :@"monsterCollision"];
-    [_physicsWorld addChild:_dumbmonster.sprite];
+    NSString* dumb_normal = @"megagrunt.png";
+    NSString* dumb_stunned = @"megagrunt_stunned.png";
+    _dumbmonster = [AIActor spriteWithImageNamed:dumb_normal];
+    PatrollingAIBehavior *behavior = [[PatrollingAIBehavior alloc] initWithPoints:startPos :
+    ccp(self.contentSize.width/5, 4*self.contentSize.height/5) monster:_dumbmonster];
+    [_dumbmonster initWithBehavior:behavior :startPos normalSprite:dumb_normal stunnedSprite:dumb_stunned];
+    [_physicsWorld addChild:_dumbmonster];
     [_dumbmonster startAI];
     
+    // Add another monster
+    CGPoint startPos2 = ccp(self.contentSize.width/2,4*self.contentSize.height/5);
+    NSString* other_normal = @"monster2.png";
+    NSString* other_stunned = @"monster2_stunned.png";
+    _othermonster = [AIActor spriteWithImageNamed:other_normal];
+    FollowAIBehavior *otherbehavior = [[FollowAIBehavior alloc] init:_aquila :_othermonster];
+    [_othermonster initWithBehavior:otherbehavior :startPos2 normalSprite:other_normal stunnedSprite:other_stunned];
+    [_physicsWorld addChild:_othermonster];
+    [_othermonster startAI];
+    
+    // Add third monster
+    CGPoint startPos3 = ccp(3*self.contentSize.width/4,self.contentSize.height/4);
+    NSString* third_normal = @"monster2.png";
+    NSString* third_stunned = @"monster2_stunned.png";
+    _thirdmonster = [AIActor spriteWithImageNamed:third_normal];
+    FollowAIBehavior *thirdbehavior = [[FollowAIBehavior alloc] init:_aquila :_thirdmonster];
+    [_thirdmonster initWithBehavior:thirdbehavior :startPos3 normalSprite:third_normal stunnedSprite:third_stunned];
+    solved = false;
+    
     // Create crystals
-    NSValue *loc1 = [NSValue valueWithCGPoint:ccp(self.contentSize.width/2, self.contentSize.height/3)];
+    // Positions
+    NSValue *loc1 = [NSValue valueWithCGPoint:ccp(self.contentSize.width/2, self.contentSize.height/5)];
     NSValue *loc2 = [NSValue valueWithCGPoint:ccp(4*self.contentSize.width/5, 4*self.contentSize.height/5)];
-    NSNumber *state1 = [NSNumber numberWithInt:On];
-    NSNumber *state2 = [NSNumber numberWithInt:Off];
+    NSValue *loc3 = [NSValue valueWithCGPoint:ccp(1*self.contentSize.width/5, 4*self.contentSize.height/5)];
+    NSValue *loc4 = [NSValue valueWithCGPoint:ccp(4*self.contentSize.width/5, 2*self.contentSize.height/5)];
+    // Initial States
+    NSNumber *state1 = [NSNumber numberWithInt:Off];
+    NSNumber *state2 = [NSNumber numberWithInt:On];
+    NSNumber *state3 = [NSNumber numberWithInt:On];
+    NSNumber *state4 = [NSNumber numberWithInt:On];
+    // Links
+    /*
+     Pink Crystal = Crystal 1    linked to: 2
+     Purple Crystal = Crystal 2  linked to: 3
+     Orange Crystal = Crystal 3  linked to:
+     Blue Crystal = Crystal 4    linked to: 3, 1
+     
+     The Pink Crystal activates the Purple Crystal as well.
+     The Purple Crystal activates the Orange Crystal as well.
+     The Blue Crystal activates both the Orange and Pink Crystals as well.
+     */
+    NSArray *link1 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:1], nil];
+    NSArray *link2 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:2], nil];
+    NSArray *link3 = [[NSArray alloc] initWithObjects: nil];
+    NSArray *link4 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
+                                                      [NSNumber numberWithInt:2], nil];
+                      
+    NSArray* crystalPositions = [[NSArray alloc] initWithObjects:loc1, loc2, loc3, loc4, nil];
+    NSArray* crystalStates = [[NSArray alloc] initWithObjects:state1,state2,state3,state4,nil];
+    NSArray* crystalLinks = [[NSArray alloc] initWithObjects:link1, link2,link3,link4, nil];
     
-    NSArray* crystalPositions = [[NSArray alloc] initWithObjects:loc1, loc2, nil];
-    NSArray* crystalStates = [[NSArray alloc] initWithObjects:state1,state2, nil];
+    _crystals = [CrystalSet createCrystalSet:crystalPositions initialStates:crystalStates physicsNode:_physicsWorld linkedCrystals:crystalLinks level:self];
     
-    _crystals = [CrystalSet createCrystalSet:crystalPositions initialStates:crystalStates physicsNode:_physicsWorld];
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -171,6 +216,27 @@
 - (void)doneWalking {
     _aquila.currentWalk = NULL;
     CCLOG(@"%s", "done walking");
+}
+
+-(void) solvedCrystals {
+    if (!solved) {
+        CCLOG(@"Solved");
+        [_physicsWorld addChild:_thirdmonster];
+        [_thirdmonster startAI];
+        solved = true;
+    }
+    
+    // !
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"!" fontName:@"Chalkduster" fontSize:50.0f];
+    label.positionType = CCPositionTypeNormalized;
+    label.color = [CCColor whiteColor];
+    label.position = ccp(0.5f, 0.9f); // Middle of screen
+    [self addChild:label];
+    CCActionRemove *remove = [CCActionRemove action];
+    CCActionDelay *delay = [CCActionDelay actionWithDuration:AI_STUN_DURATION];
+    CCActionSequence *sequence = [CCActionSequence actionWithArray:@[delay, remove]];
+    [label runAction:sequence];
+    
 }
 
 // -----------------------------------------------------------------------
@@ -288,12 +354,6 @@
     }
 }
 
--(void) restartAI
-{
-    _dumbmonster.state = Normal;
-    [_dumbmonster startAI];
-}
-
 -(void) gameOver {
     // Title
     CCLabelTTF *label = [CCLabelTTF labelWithString:@"You died" fontName:@"Chalkduster" fontSize:50.0f];
@@ -302,22 +362,28 @@
     label.position = ccp(0.5f, 0.8f); // Middle of screen
     [_physicsWorld removeChild:_aquila];
     [self addChild:label];
+    
+    // Create a reset button
+    CCButton *resetButton = [CCButton buttonWithTitle:@"Reset" fontName:@"Verdana-Bold" fontSize:25.0f];
+    resetButton.positionType = CCPositionTypeNormalized;
+    resetButton.position = ccp(0.5f, 0.7f); // Top Right of screen
+    [resetButton setTarget:self selector:@selector(onResetClicked:)];
+    [self addChild:resetButton];
+    
 }
 
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(AIActor *)monster aquilaCollision:(Aquila *)aqui {
     CCLOG(@"Aquilla collided with monster");
-    if (_aquila.state != Dashing && _dumbmonster.state == Normal) {
+    if (aqui.state != Dashing && monster.state == Normal) {
         [self gameOver];
     }
-    else if (_aquila.state == Dashing)
+    else if (aqui.state == Dashing)
     {
-        _dumbmonster.state = Stunned;
-        [_dumbmonster stopAI];
-        [NSTimer scheduledTimerWithTimeInterval:AI_STUN_DURATION
-                                         target:self
-                                       selector:NSSelectorFromString(@"restartAI")
-                                       userInfo:nil
-                                    repeats:NO];
+        [monster stun];
+        CCActionCallFunc *unstun = [CCActionCallFunc actionWithTarget:monster selector:@selector(restartAI)];
+        CCActionDelay *delay = [CCActionDelay actionWithDuration:AI_STUN_DURATION];
+        CCActionSequence *sequence = [CCActionSequence actionWithArray:@[delay, unstun]];
+        [monster runAction:sequence];
     }
     return YES;
 }
@@ -326,7 +392,7 @@
     CCLOG(@"Aquilla collided with crystal");
     [_aquila stopAllActions];
     _aquila.state = Standing;
-    [crystal flipState];
+    [crystal flipState:true];
     return YES;
 }
 
@@ -348,6 +414,13 @@
     // back to intro scene with transition
     [[CCDirector sharedDirector] replaceScene:[IntroScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
+}
+
+- (void)onResetClicked:(id)sender
+{
+    // back to demo scene with transition
+    [[CCDirector sharedDirector] replaceScene:[DemoScene scene]
+                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:0.5f]];
 }
 
 - (void)onDebugClicked:(id)sender

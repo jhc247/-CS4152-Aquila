@@ -7,6 +7,7 @@
 //
 
 #import "Crystal.h"
+#import "CrystalSet.h"
 #import "Constants.h"
 
 
@@ -15,6 +16,7 @@
 // -----------------------------------------------------------------------
 @interface Crystal()
 @property (nonatomic, readwrite, assign) CrystalState state; //sets setState() to private readwrite access
+@property (nonatomic, readwrite, strong) NSArray* linkedCrystals;
 
 
 @end
@@ -27,9 +29,7 @@
 #pragma mark - Create and Destroy
 // -----------------------------------------------------------------------
 
--(void)initCrystal: (CGPoint)position startState:(CrystalState) state {
-    // Apple recommend assigning self with supers return value, and handling self not created
-    //CCLOG(@"Position: %@", NSStringFromCGPoint(position));
+-(void)initCrystal: (CGPoint)position startState:(CrystalState) state crystalSet:(CrystalSet*) set {
     self.position = position;
     
     // Create physics body
@@ -38,9 +38,9 @@
     body.collisionGroup = @"crystalGroup";
     body.mass = CRYSTAL_MASS;
     
-    
     self.physicsBody = body;
     self.state = state;
+    self.crystalSet = set;
 }
 
 - (void)dealloc
@@ -50,20 +50,21 @@
     
 }
 
+-(void)setLinks: (NSArray*) links {
+    self.linkedCrystals = [NSArray arrayWithArray:links];
+}
 
 // -----------------------------------------------------------------------
 #pragma mark - Property implementation
 // -----------------------------------------------------------------------
 
 
--(void)flipState {
+-(void)flipState: (bool)flipOthers  {
     NSString* newSprite;
     if (self.state == On) {
         self.state = Off;
         [_crystalSet incrementOff];
         newSprite = @"ice_crystal_off1.png";
-        
-        
     }
     else {
         self.state = On;
@@ -71,6 +72,14 @@
         newSprite = @"ice_crystal1.png";
     }
     [self setTexture:[[CCSprite spriteWithImageNamed:newSprite] texture]];
+    if (flipOthers) {
+        for (id obj in [self linkedCrystals]) {
+            Crystal* c = obj;
+            [c flipState:false];
+        }
+    }
+    [_crystalSet isSolved];
+
 }
 // -----------------------------------------------------------------------
 

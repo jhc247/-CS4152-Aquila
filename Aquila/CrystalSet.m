@@ -16,21 +16,23 @@
 @implementation CrystalSet {
     NSMutableArray *crystals;
     int numOff;
+    DemoScene* scene;
 }
 
 // -----------------------------------------------------------------------
 #pragma mark - Create and Destroy
 // -----------------------------------------------------------------------
 
-+(instancetype)createCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics {
-    return([[CrystalSet alloc] initCrystalSet:positions initialStates:states physicsNode:physics]);
++(instancetype)createCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(DemoScene*) lvl {
+    return([[CrystalSet alloc] initCrystalSet:positions initialStates:states physicsNode:physics linkedCrystals:links level:lvl]);
 }
 
--(instancetype)initCrystalSet:(NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics {
+-(instancetype)initCrystalSet:(NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(DemoScene*) lvl {
     // Apple recommend assigning self with supers return value, and handling self not created
     self = [super init];
     if (!self) return(nil);
     
+    scene = lvl;
     crystals = [NSMutableArray array];
     numOff = 0;
     
@@ -46,11 +48,20 @@
         image = state ? @"ice_crystal1.png" : @"ice_crystal_off1.png";
         Crystal *c = [Crystal spriteWithImageNamed:image];
         CCLOG(@"Created crystal at position %@ with state %d", NSStringFromCGPoint(position), state);
-        [c initCrystal: position startState:state];
+        [c initCrystal: position startState:state crystalSet:self];
         [crystals addObject:c];
         [physics addChild:c];
     }
-    
+    for (int i = 0; i < [links count]; i++) {
+        Crystal *c = [crystals objectAtIndex:i];
+        NSMutableArray *lnks = [[NSMutableArray alloc] init];
+        
+        for (id crys in [links objectAtIndex:i]) {
+            int crysNum = [crys integerValue];
+            [lnks addObject:[crystals objectAtIndex:crysNum]];
+        }
+        [c setLinks:lnks];
+    }
     return self;
 }
 
@@ -61,18 +72,20 @@
     
 }
 
-// -----------------------------------------------------------------------
-#pragma mark - Instance methods
-// -----------------------------------------------------------------------
 - (void)incrementOn {
+    CCLOG(@"Num off: %d", numOff);
     numOff--;
-    if (numOff == 0) {
-        //TODO: call some event handler that all crystals are on
-    }
 }
 
 - (void)incrementOff {
+    CCLOG(@"Num off: %d", numOff);
     numOff++;
+}
+
+- (void)isSolved {
+    if (numOff == 0) {
+        [scene solvedCrystals];
+    }
 }
 
 @end
