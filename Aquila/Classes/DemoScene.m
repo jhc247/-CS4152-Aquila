@@ -275,13 +275,25 @@
     }
 }
 
+-(void) restartAI
+{
+    _dumbmonster.state = Normal;
+    [_dumbmonster startAI];
+}
+
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(CCNode *)monster aquilaCollision:(CCNode *)aqui {
-    if (_aquila.state == Walking) {
+    if (_aquila.state == Walking && _dumbmonster.state == Normal) {
         [_physicsWorld removeChild:_aquila];
     }
-    else
+    else if (_aquila.state == Dashing)
     {
+        _dumbmonster.state = Stunned;
         [_dumbmonster stopAI];
+        [NSTimer scheduledTimerWithTimeInterval:AI_STUN_DURATION
+                                         target:self
+                                       selector:NSSelectorFromString(@"restartAI")
+                                       userInfo:nil
+                                        repeats:NO];
     }
     return YES;
 }
