@@ -226,10 +226,10 @@
     }
     
     // !
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"!" fontName:@"Chalkduster" fontSize:50.0f];
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"!" fontName:@"Chalkduster" fontSize:150.0f];
     label.positionType = CCPositionTypeNormalized;
-    label.color = [CCColor whiteColor];
-    label.position = ccp(0.5f, 0.9f); // Middle of screen
+    label.color = [CCColor greenColor];
+    label.position = ccp(0.5f, 0.8f); // Middle of screen
     [self addChild:label];
     CCActionRemove *remove = [CCActionRemove action];
     CCActionDelay *delay = [CCActionDelay actionWithDuration:AI_STUN_DURATION];
