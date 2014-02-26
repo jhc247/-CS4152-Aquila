@@ -281,9 +281,20 @@
     [_dumbmonster startAI];
 }
 
+-(void) gameOver {
+    // Title
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"You died" fontName:@"Chalkduster" fontSize:50.0f];
+    label.positionType = CCPositionTypeNormalized;
+    label.color = [CCColor redColor];
+    label.position = ccp(0.5f, 0.8f); // Middle of screen
+    [_physicsWorld removeChild:_aquila];
+    [self addChild:label];
+}
+
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(CCNode *)monster aquilaCollision:(CCNode *)aqui {
-    if (_aquila.state == Walking && _dumbmonster.state == Normal) {
-        [_physicsWorld removeChild:_aquila];
+    CCLOG(@"Monster state: %d", _dumbmonster.state);
+    if (_aquila.state != Dashing && _dumbmonster.state == Normal) {
+        [self gameOver];
     }
     else if (_aquila.state == Dashing)
     {
@@ -293,7 +304,7 @@
                                          target:self
                                        selector:NSSelectorFromString(@"restartAI")
                                        userInfo:nil
-                                        repeats:NO];
+                                    repeats:NO];
     }
     return YES;
 }

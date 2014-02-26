@@ -16,6 +16,7 @@
 - (id) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CCSprite*) sprt
 {
     _behavior = behavior;
+    _state = Normal;
     self.sprite = sprt;
     return self;
 }
