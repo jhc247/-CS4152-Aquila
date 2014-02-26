@@ -45,9 +45,8 @@
     
     // Create physics body
     CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0];
-    body.type = CCPhysicsBodyTypeDynamic;
-    body.collisionCategories = @[CollisionAquila];
-    body.collisionMask = @[];
+    body.collisionType = @"aquilaCollision";
+    body.collisionGroup = @"aquilaGroup";
     body.mass = AQUILA_MASS;
     
     self.physicsBody = body;
@@ -123,9 +122,6 @@
         
         float angle= CC_RADIANS_TO_DEGREES(atanf(ychange/xchange));
         float angle_degrees;
-        //CCLOG(@"%s", "-------------------");
-        //CCLOG(@"Y-Change: %f", ychange);
-        //CCLOG(@"X-Change: %f", xchange);
         
         if (ychange >= 0) {
             if (xchange >= 0) {
@@ -144,9 +140,6 @@
             }
         }
         float angle_radians = CC_DEGREES_TO_RADIANS(angle_degrees);
-        //CCLOG(@"Angle Degrees: %f", angle_degrees);
-        //CCLOG(@"FLICK*COS: %f", FLICK_LENGTH*cos(angle_radians));
-        //CCLOG(@"FLICK*SIN %f", FLICK_LENGTH*sin(angle_radians));
         float endX = start.x + FLICK_LENGTH*cos(angle_radians);
         float endY = start.y + FLICK_LENGTH*sin(angle_radians);
         CGPoint endPoint = ccp(endX, endY);
@@ -158,9 +151,7 @@
         if (angle_change > 180 || angle_change < -180) {
             angle_change = 360 - fabsf(angle_change);
         }
-        //CCLOG(@"Initial angle: %f", updated_initial_rotation);
-        //CCLOG(@"Target angle: %f", angle_degrees);
-        //CCLOG(@"Angle Change: %f", angle_change);
+        
         CCActionMoveTo *flickMove = [CCActionMoveTo  actionWithDuration:duration position:endPoint];
         CCActionRotateBy *actionSpin = [CCActionRotateBy actionWithDuration:duration/2 angle:
                                         angle_change];

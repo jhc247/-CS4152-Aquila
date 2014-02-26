@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36690CBB18BD43B100868BAB /* AIActor.m in Sources */ = {isa = PBXBuildFile; fileRef = 36690CBA18BD43B100868BAB /* AIActor.m */; };
+		36690CC118BD47C300868BAB /* PatrollingAIBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 36690CC018BD47C300868BAB /* PatrollingAIBehavior.m */; };
 		F10280DB18B7D2CA00802C3B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F10280DA18B7D2CA00802C3B /* QuartzCore.framework */; };
 		F10280DD18B7D2CA00802C3B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F10280DC18B7D2CA00802C3B /* OpenGLES.framework */; };
 		F10280DF18B7D2CA00802C3B /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F10280DE18B7D2CA00802C3B /* OpenAL.framework */; };
@@ -239,6 +241,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36690CB918BD43B100868BAB /* AIActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActor.h; sourceTree = "<group>"; };
+		36690CBA18BD43B100868BAB /* AIActor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActor.m; sourceTree = "<group>"; };
+		36690CBC18BD454000868BAB /* AIBehaving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIBehaving.h; sourceTree = "<group>"; };
+		36690CBF18BD47C300868BAB /* PatrollingAIBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatrollingAIBehavior.h; sourceTree = "<group>"; };
+		36690CC018BD47C300868BAB /* PatrollingAIBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatrollingAIBehavior.m; sourceTree = "<group>"; };
 		F10280D718B7D2CA00802C3B /* Aquila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aquila.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10280DA18B7D2CA00802C3B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F10280DC18B7D2CA00802C3B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1592,6 +1599,11 @@
 				F10283B118B7D96200802C3B /* Constants.h */,
 				F102838818B7D2D400802C3B /* IntroScene.h */,
 				F102838918B7D2D400802C3B /* IntroScene.m */,
+				36690CB918BD43B100868BAB /* AIActor.h */,
+				36690CBA18BD43B100868BAB /* AIActor.m */,
+				36690CBC18BD454000868BAB /* AIBehaving.h */,
+				36690CBF18BD47C300868BAB /* PatrollingAIBehavior.h */,
+				36690CC018BD47C300868BAB /* PatrollingAIBehavior.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1817,11 +1829,13 @@
 				F102829D18B7D2D100802C3B /* mach_timing.c in Sources */,
 				F10282A118B7D2D100802C3B /* NSMutableArray+WeakReferences.m in Sources */,
 				F10282A418B7D2D100802C3B /* NSMutableDictionary+WeakReferences.m in Sources */,
+				36690CC118BD47C300868BAB /* PatrollingAIBehavior.m in Sources */,
 				F10282A718B7D2D100802C3B /* OALAudioFile.m in Sources */,
 				F10282AB18B7D2D100802C3B /* OALTools.m in Sources */,
 				F10282B118B7D2D100802C3B /* CCButton.m in Sources */,
 				F10282B418B7D2D100802C3B /* CCControl.m in Sources */,
 				F10282B818B7D2D100802C3B /* CCControlTextureFactory.m in Sources */,
+				36690CBB18BD43B100868BAB /* AIActor.m in Sources */,
 				F10282BB18B7D2D100802C3B /* CCScrollView.m in Sources */,
 				F10282BE18B7D2D100802C3B /* CCSlider.m in Sources */,
 				F10282C118B7D2D100802C3B /* CCTableView.m in Sources */,

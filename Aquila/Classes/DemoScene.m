@@ -15,6 +15,8 @@
 #import "CCSprite.h"
 #import "CCActionInstant.h"
 #import "Aquila.h"
+#import "AIActor.h"
+#import "PatrollingAIBehavior.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - DemoScene
@@ -24,8 +26,7 @@
 {
     Aquila *_aquila;
     CCPhysicsNode *_physicsWorld;
-    CCSprite *_dumbmonster;
-    CCSprite *_followmonster;
+    AIActor *_dumbmonster;
     
     bool green;
     CCSprite *greencircle;
@@ -86,24 +87,22 @@
     
     // Add Aquila
     _aquila = [Aquila spriteWithImageNamed:@"sword.png"];
-    [_aquila initAquila: ccp(self.contentSize.width/4,self.contentSize.height/4)];
+    [_aquila initAquila: ccp(self.contentSize.width/2,self.contentSize.height/2)];
     [_physicsWorld addChild:_aquila];
+    _aquila.currentWalk = NULL;
     
     // Add dumb monster
-    _dumbmonster = [CCSprite spriteWithImageNamed:@"megagrunt.png"];
-    _dumbmonster.position = ccp(self.contentSize.width/5,self.contentSize.height/5);
-    _dumbmonster.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, _dumbmonster.contentSize} cornerRadius:0];
-    _dumbmonster.physicsBody.collisionGroup = @"monsterGroup";
-    _dumbmonster.physicsBody.collisionType = @"monsterCollision";
-    [_physicsWorld addChild:_dumbmonster];
+    CGPoint startPos = ccp(self.contentSize.width/5,self.contentSize.height/5);
+    _dumbmonster = [[AIActor alloc] initWithBehavior:[[PatrollingAIBehavior alloc] initWithPoints :startPos
+                                                                                                  :ccp(self.contentSize.width/5, 4*self.contentSize.height/5)]
+                                                    :[CCSprite spriteWithImageNamed:@"megagrunt.png"]];
+    _dumbmonster = [_dumbmonster addPhysics    :startPos
+                                :[CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, _dumbmonster.sprite.contentSize} cornerRadius:0]
+                                :@"monsterGroup"
+                                :@"monsterCollision"];
+    [_physicsWorld addChild:_dumbmonster.sprite];
+    [_dumbmonster startAI];
     
-    // Add follow monster
-    _followmonster = [CCSprite spriteWithImageNamed:@"monster2.png"];
-    _followmonster.position = ccp(3*self.contentSize.width/5,4*self.contentSize.height/5);
-    _followmonster.physicsBody = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, _followmonster.contentSize} cornerRadius:0];
-    _followmonster.physicsBody.collisionGroup = @"enemyGroup";
-    _followmonster.physicsBody.collisionType = @"monsterCollision";
-    [_physicsWorld addChild:_followmonster];
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -204,9 +203,9 @@
         CCActionCallFunc *update_status = [CCActionCallFunc actionWithTarget:self selector:NSSelectorFromString(@"doneWalking")];
         CCActionSequence *actions = [CCActionSequence actionWithArray:@[walkMove, update_status]];
         
+        [_aquila stopAllActions];
         [_aquila runAction: actionSpin];
         [_aquila runAction: actions];
-        [_aquila stopAction:_aquila.currentWalk];
         _aquila.currentWalk = actions;
         // Log touch location
         CCLOG(@"Aquila walking to @ %@",NSStringFromCGPoint(targetPoint));
@@ -257,9 +256,11 @@
         CCActionCallFunc *update_status = [CCActionCallFunc actionWithTarget:self selector:NSSelectorFromString(@"doneWalking")];
         CCActionSequence *actions = [CCActionSequence actionWithArray:@[walkMove, update_status]];
         
+        
+        [_aquila stopAllActions];
         [_aquila runAction: actionSpin];
         [_aquila runAction: actions];
-        [_aquila stopAction:_aquila.currentWalk];
+        
         _aquila.currentWalk = actions;
         // Log touch location
         CCLOG(@"Aquila walking to @ %@",NSStringFromCGPoint(targetPoint));
@@ -272,6 +273,17 @@
         
         
     }
+}
+
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(CCNode *)monster aquilaCollision:(CCNode *)aqui {
+    if (_aquila.state == Walking) {
+        [_physicsWorld removeChild:_aquila];
+    }
+    else
+    {
+        [_dumbmonster stopAI];
+    }
+    return YES;
 }
 
 - (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event {
