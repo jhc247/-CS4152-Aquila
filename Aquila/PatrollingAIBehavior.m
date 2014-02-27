@@ -8,6 +8,7 @@
 
 #import "PatrollingAIBehavior.h"
 #import "AIActor.h"
+#import "Constants.h"
 
 @implementation PatrollingAIBehavior
 {
@@ -26,8 +27,9 @@
 
 - (void) generateAIAction
 {
-    CCActionMoveTo* patrol1 = [CCActionMoveTo actionWithDuration:2 position:_end];
-    CCActionMoveTo* patrol2 = [CCActionMoveTo actionWithDuration:2 position:_start];
+    float duration = ccpDistance(_end, _start)/AI_PATROL_SPEED;
+    CCActionMoveTo* patrol1 = [CCActionMoveTo actionWithDuration:duration position:_end];
+    CCActionMoveTo* patrol2 = [CCActionMoveTo actionWithDuration:duration position:_start];
     CCActionSequence* patrolAction = [CCActionSequence actionWithArray:@[patrol1, patrol2]];
     [_monster runAction: [CCActionRepeatForever actionWithAction:patrolAction]];
 }

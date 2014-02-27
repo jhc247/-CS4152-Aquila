@@ -69,15 +69,17 @@
     level_height = 1.5;
     _AquilaStart = ccp(.5*width, .5*height);
     
-    //Format:       {EnemyType, startX, startY, behavior(0=follow,1=patroll),
+    //Format:       {EnemyType, startX, startY, behavior(1=follow,0=patroll),
     //               patrolpt1_x, patrolpt1_y, patrolpt2_x, patrolpt2_y};
-    int numEnemies = 2; // <---- Update this field when adding
+    int numEnemies = 3; // <---- Update this field when adding
     _enemies = (int**)malloc(numEnemies*sizeof(int*));
-    int enemy1[8] = {Megagrunt, (int)width, (int)(height/2), 1, -1, -1, -1, -1};
-    int enemy2[8] = {Megagrunt, (int)(width/2), (int)height, 0, 0, (int)width, (int)height};
+    int enemy1[8] = {Game_N_Watch, (int)width, (int)(height/2), 1, -1, -1, -1, -1};
+    int enemy2[8] = {Megagrunt, (int)(width/2), (int)height, 0, 0, (int)height, (int)width, (int)height};
+    int enemy3[8] = {Megagrunt, (int)width, (int)(height/2), 0, (int)width, 0,(int)width, (int)height};
 
     _enemies[0] = enemy1;
     _enemies[1] = enemy2;
+    _enemies[2] = enemy3;
 
     
     // Initialize arrays
