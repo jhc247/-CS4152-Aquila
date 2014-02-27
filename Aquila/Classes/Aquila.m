@@ -8,10 +8,17 @@
 
 #import "Aquila.h"
 #import "Constants.h"
+#import "PhysicsCollisionDelegate.h"
 
 // -----------------------------------------------------------------------
 #pragma mark Aquila
 // -----------------------------------------------------------------------
+
+@interface Aquila()
+
+@property (nonatomic, readwrite, assign) AquilaState state; //sets setState() to private access
+
+@end
 
 @implementation Aquila {
     BOOL _grabbed;
@@ -40,11 +47,11 @@
     self.userInteractionEnabled = YES;
     
     self.position = position;
-    self.zOrder = 5;
+    self.zOrder = 1;
     
     // Create physics body
     CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0.0f];
-    body.collisionType = @"aquilaCollision";
+    body.collisionType = aquilaCollisionType;
     body.collisionGroup = @"aquilaGroup";
     body.mass = AQUILA_MASS;
     
@@ -67,6 +74,7 @@
 - (void)doneDashing {
     self.state = Standing;
     CCLOG(@"Done dashing");
+    CCLOG(@"Aquila location: %@", NSStringFromCGPoint([_parent convertToWorldSpace:self.position]));
 }
 
 // -----------------------------------------------------------------------
@@ -75,10 +83,6 @@
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    // convert the touch into parents coordinate system
-    // This is often the same as the world location, but if the scene is ex, scaled or offset, it might not be
-    CCLOG(@"Aquila was touched");
-    //CGPoint parentPos = [_parent convertToNodeSpace:touch.locationInWorld];
     if (self.state == Standing || self.state == Walking) {
         _grabbed = YES;
         [self stopAllActions];
@@ -89,18 +93,13 @@
         
     }
     
+    return;
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    /*// convert the touch into parents coordinate system
-    // This is often the same as the world location, but if the scene is ex, scaled or offset, it might not be
-    CGPoint parentPos = [_parent convertToNodeSpace:touch.locationInWorld];
     
-    // on each move, calculate a velocity used in update, and save new state data
-    _previousVelocity = ccpMult( ccpSub(parentPos, _previousPos), 1 / (event.timestamp - _previousTime));
-    _previousTime = event.timestamp;
-    _previousPos = parentPos;*/
+    return;
 }
 
 - (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
@@ -115,10 +114,11 @@
             return;
         }
         self.state = Dashing;
+        
+        // Calculate angle, distance and actions 
         float distance = ccpDistance(start, touchEnd);
         float xchange = touchEnd.x - start.x;
         float ychange = touchEnd.y - start.y;
-        
         float angle= CC_RADIANS_TO_DEGREES(atanf(ychange/xchange));
         float angle_degrees;
         
@@ -164,7 +164,6 @@
     }
     // if not grabbed anymore, return mass to normal
     _grabbed = NO;
-    
 }
 
 - (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
@@ -173,5 +172,33 @@
 }
 
 // -----------------------------------------------------------------------
+#pragma mark - State Manipulators implementation
+// -----------------------------------------------------------------------
+- (void) stand {
+    [self stopAllActions];
+    _state = Standing;
+}
+
+- (void) walk:(CCActionMoveTo*)move rotate:(CCActionRotateTo*)rotate; {
+    [self stopAllActions];
+    _state = Walking;
+    CCActionCallFunc *update_status = [CCActionCallFunc actionWithTarget:self selector:NSSelectorFromString(@"doneWalking")];
+    CCActionSequence *actions = [CCActionSequence actionWithArray:@[move, update_status]];
+    [self runAction: rotate];
+    [self runAction: actions];
+}
+
+- (void) dash {
+    
+}
+
+- (void) die {
+    [self runAction: [CCActionRemove action]];
+    // Deallocate?
+}
+
+- (void)doneWalking {
+    [self stand];
+}
 
 @end

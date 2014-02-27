@@ -12,11 +12,17 @@
 #
 
 // -----------------------------------------------------------------------
-// Types of effects applied to the spheres
+// Types of effects applied to the enemies
 typedef NS_ENUM(NSInteger, AIState)
 {
     Stunned,
     Normal
+};
+
+// Types of enemy
+typedef NS_ENUM(NSInteger, EnemyType) {
+    Megagrunt,
+    Game_N_Watch
 };
 
 // -----------------------------------------------------------------------
@@ -26,8 +32,11 @@ typedef NS_ENUM(NSInteger, AIState)
 // -----------------------------------------------------------------------
 
 @property (nonatomic, assign) AIState state;
+@property (nonatomic, assign) EnemyType type;
 
-- (void) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CGPoint)position normalSprite:(NSString*) normal stunnedSprite:(NSString*) stunned;
++ (NSString*) getSprite:(EnemyType)type state:(AIState)state;
+
+- (void) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CGPoint)position type:(EnemyType)type;
 - (void) startAI;
 - (void) restartAI;
 - (void) stopAI;

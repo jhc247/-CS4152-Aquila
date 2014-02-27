@@ -43,11 +43,14 @@ typedef NS_ENUM(NSInteger, AquilaState)
 
 // -----------------------------------------------------------------------
 
-@property (nonatomic, assign) AquilaState state;
-@property (nonatomic, assign) CCActionSequence *currentWalk;
+@property (nonatomic, readonly, assign) AquilaState state;
 
 // -----------------------------------------------------------------------
 
-- (void)initAquila: (CGPoint) position;
+- (void) initAquila: (CGPoint) position;
+- (void) stand;
+- (void) walk:(CCActionMoveTo*)move rotate:(CCActionRotateTo*)rotate;
+- (void) dash;
+- (void) die;
 
 @end

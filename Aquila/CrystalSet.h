@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "DemoScene.h"
+#import "LevelScene.h"
 
 // -----------------------------------------------------------------------
 
@@ -16,11 +16,13 @@
 
 // -----------------------------------------------------------------------
 
-+ (instancetype)createCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(DemoScene*) lvl;
-- (instancetype)initCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(DemoScene*) lvl;
++ (instancetype)createCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(LevelScene*) lvl;
+
+- (instancetype)initCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(LevelScene*) lvl;
 
 - (void)incrementOn;
 - (void)incrementOff;
-- (void)isSolved;
+- (BOOL)doSomething;
+- (void)roundDone;
 
 @end

@@ -8,6 +8,7 @@
 
 static const float AQUILA_WALK_SPEED = 200;
 static const float AQUILA_FLICK_SPEED = 800;
+static const float AQUILA_ROTATE_DURATION = 0.3f;
 static const float AQUILA_MASS = 1;
 static const float AQUILA_MOVING_MASS = 1;
 
@@ -26,7 +27,17 @@ static const float CRYSTAL_MASS = 1000;
 
 static const float SLOW_SPEED = 100;
 
+// Sprites
 
-static const NSString *CollisionAquila = @"aquila";
+static const NSString* AQUILA = @"sword.png";
+
+static const NSString* MEGAGRUNT = @"megagrunt.png";
+static const NSString* MEGAGRUNT_STUNNED = @"megagrunt_stunned.png";
+static const NSString* GAMEnWATCH = @"monster2.png";
+static const NSString* GAMEnWATCH_STUNNED = @"monster2_stunned.png";
+
+static const NSString* CRYSTAL_ON = @"ice_crystal1.png";
+static const NSString* CRYSTAL_OFF = @"ice_crystal_off1.png";
+
 //static const NSString *NewtonSphereCollisionOutline = @"outline";
 //static const NSString *NewtonSphereCollisionRope = @"rope";

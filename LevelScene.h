@@ -11,17 +11,18 @@
 
 // -----------------------------------------------------------------------
 
-@interface Level : CCScene
+@interface LevelScene : CCScene
 
 // -----------------------------------------------------------------------
 
-@property (readonly, assign) CGPoint AquilaStart;
-@property (readonly, assign) (NSArray*) monsters;
-@property (readonly, assign) (NSARray*) crystals;
+@property (nonatomic, readonly, assign) CGPoint AquilaStart;
+@property (nonatomic, assign) NSArray *enemies;
+@property (nonatomic, assign) NSArray *crystals;
+
 
 // -----------------------------------------------------------------------
 
-+ (Level *)scene;
++ (LevelScene *)scene;
 - (id)init;
 
 // Tutorial on how to save persistent data

@@ -16,18 +16,20 @@
 @implementation CrystalSet {
     NSMutableArray *crystals;
     int numOff;
-    DemoScene* scene;
+    BOOL solved;
+    BOOL hasReturnedTrue;
+    LevelScene* scene;
 }
 
 // -----------------------------------------------------------------------
 #pragma mark - Create and Destroy
 // -----------------------------------------------------------------------
 
-+(instancetype)createCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(DemoScene*) lvl {
++(instancetype)createCrystalSet: (NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(LevelScene*) lvl {
     return([[CrystalSet alloc] initCrystalSet:positions initialStates:states physicsNode:physics linkedCrystals:links level:lvl]);
 }
 
--(instancetype)initCrystalSet:(NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(DemoScene*) lvl {
+-(instancetype)initCrystalSet:(NSArray*) positions initialStates:(NSArray*) states physicsNode:(CCPhysicsNode*) physics linkedCrystals:(NSArray*) links level:(LevelScene*) lvl {
     // Apple recommend assigning self with supers return value, and handling self not created
     self = [super init];
     if (!self) return(nil);
@@ -82,9 +84,17 @@
     numOff++;
 }
 
-- (void)isSolved {
-    if (numOff == 0) {
-        [scene solvedCrystals];
+- (BOOL)doSomething {
+    if (!hasReturnedTrue && numOff == 0) {
+        hasReturnedTrue = YES;
+        return YES;
+    }
+    return NO;
+}
+
+- (void) roundDone {
+    if (numOff != 0) {
+        hasReturnedTrue = NO;
     }
 }
 

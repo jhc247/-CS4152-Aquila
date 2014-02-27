@@ -9,10 +9,7 @@
 
 // Import the interfaces
 #import "IntroScene.h"
-#import "DemoScene.h"
-#import "NewtonScene.h"
-#import "ControlScene.h"
-#import "MonsterScene.h"
+#import "LevelScene.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - IntroScene
@@ -80,21 +77,21 @@
 - (void)onPlayClicked:(id)sender
 {
     // start spinning scene with transition
-    [[CCDirector sharedDirector] replaceScene:[DemoScene scene]
+    [[CCDirector sharedDirector] replaceScene:[LevelScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
 }
 
 - (void)onMonsterClicked:(id)sender
 {
     // start spinning scene with transition
-    [[CCDirector sharedDirector] replaceScene:[MonsterScene scene]
+    [[CCDirector sharedDirector] replaceScene:[LevelScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:1.0f]];
 }
 
 - (void)onControlsClicked:(id)sender
 {
     // start spinning scene with transition
-    [[CCDirector sharedDirector] replaceScene:[ControlScene scene]
+    [[CCDirector sharedDirector] replaceScene:[LevelScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
 }
 

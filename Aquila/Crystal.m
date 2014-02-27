@@ -9,15 +9,16 @@
 #import "Crystal.h"
 #import "CrystalSet.h"
 #import "Constants.h"
+#import "PhysicsCollisionDelegate.h"
 
 
 // -----------------------------------------------------------------------
 #pragma mark Crystal
 // -----------------------------------------------------------------------
 @interface Crystal()
+
 @property (nonatomic, readwrite, assign) CrystalState state; //sets setState() to private readwrite access
 @property (nonatomic, readwrite, strong) NSArray* linkedCrystals;
-
 
 @end
 
@@ -34,7 +35,7 @@
     
     // Create physics body
     CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0.0f];
-    body.collisionType = @"crystalCollision";
+    body.collisionType = crystalCollisionType;
     body.collisionGroup = @"crystalGroup";
     body.mass = CRYSTAL_MASS;
     
@@ -78,7 +79,7 @@
             [c flipState:false];
         }
     }
-    [_crystalSet isSolved];
+    [_crystalSet roundDone];
 
 }
 // -----------------------------------------------------------------------

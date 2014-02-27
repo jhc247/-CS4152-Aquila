@@ -7,27 +7,41 @@
 //
 
 #import "AIActor.h"
+#import "PhysicsCollisionDelegate.h"
+#import "Constants.h"
 
 @implementation AIActor : CCSprite
 {
-    NSObject<AIBehaving>*   _behavior;
+    NSObject<AIBehaving>* _behavior;
     NSString* normalSprite;
     NSString* stunnedSprite;
 }
 
-- (void) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CGPoint)position normalSprite:(NSString*) normal stunnedSprite:(NSString*) stunned
++ (NSString*) getSprite:(EnemyType)type state:(AIState)state {
+    switch (type) {
+        case Megagrunt:
+            return (state == Normal) ? MEGAGRUNT : MEGAGRUNT_STUNNED;
+        case Game_N_Watch:
+            return (state == Normal) ? GAMEnWATCH : GAMEnWATCH_STUNNED;
+        default:
+            break;
+    }
+}
+
+
+- (void) initWithBehavior:(NSObject<AIBehaving>*) behavior :(CGPoint)position type:(EnemyType)type
 {
     self.position = position;
     
     CCPhysicsBody *body = [CCPhysicsBody bodyWithRect:(CGRect){CGPointZero, self.contentSize} cornerRadius:0];
     body.collisionGroup = @"monsterGroup";
-    body.collisionType = @"monsterCollision";
+    body.collisionType = monsterCollisionType;
     
     self.physicsBody = body;
     _behavior = behavior;
-    self.state = Normal;
-    normalSprite = normal;
-    stunnedSprite = stunned;
+    _state = Normal;
+    normalSprite = [AIActor getSprite:type state:Normal];
+    stunnedSprite = [AIActor getSprite:type state:Stunned];
 }
 
 - (void) startAI
@@ -37,14 +51,14 @@
 
 - (void) restartAI
 {
-    self.state = Normal;
+    _state = Normal;
     [self setTexture:[[CCSprite spriteWithImageNamed:normalSprite] texture]];
     [self startAI];
 }
 
 - (void) stun
 {
-    self.state = Stunned;
+    _state = Stunned;
     [self setTexture:[[CCSprite spriteWithImageNamed:stunnedSprite] texture]];
     [self stopAI];
 }
@@ -53,7 +67,5 @@
 {
     [self stopAllActions];
 }
-
-
 
 @end

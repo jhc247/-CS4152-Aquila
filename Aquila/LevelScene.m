@@ -1,13 +1,12 @@
 //
-//  DemoScene.m
+//  LevelScene.m
 //  Aquila
 //
-//  Created by Jcard on 2/21/14.
-//  Copyright Seven Layer Games 2014. All rights reserved.
+//  Created by Jcard on 2/26/14.
+//  Copyright 2014 Seven Layer Games. All rights reserved.
 //
-// -----------------------------------------------------------------------
 
-#import "DemoScene.h"
+#import "LevelScene.h"
 #import "IntroScene.h"
 #import "Constants.h"
 #import "CCDrawingPrimitives.h"
@@ -19,38 +18,31 @@
 #import "FollowAIBehavior.h"
 #import "CrystalSet.h"
 #import "Crystal.h"
+#import "TouchLayer.h"
+#import "PhysicsCollisionDelegate.h"
 
 // -----------------------------------------------------------------------
-#pragma mark - DemoScene
+#pragma mark - LevelScene
 // -----------------------------------------------------------------------
 
-@implementation DemoScene
+@implementation LevelScene
 {
     Aquila *_aquila;
     CCPhysicsNode *_physicsWorld;
-    AIActor *_dumbmonster;
-    AIActor *_othermonster;
-    AIActor *_thirdmonster;
-    CrystalSet* _crystals;
+    TouchLayer *touchLayer;
     
-    bool green;
-    CCSprite *greencircle;
-    CCSprite *redcircle;
-    
-    CGPoint touchStart;
-    CGPoint touchEnd;
-    bool walking;
-    bool ignore;
-    bool solved;
+    NSMutableArray* actualEnemies;
+    NSMutableArray* actualCrystalSets;
     
     CGPoint walkTarget;
+    CGPoint prevAquilaLocation;
 }
 
 // -----------------------------------------------------------------------
 #pragma mark - Create & Destroy
 // -----------------------------------------------------------------------
 
-+ (DemoScene *)scene
++ (LevelScene *)scene
 {
     return [[self alloc] init];
 }
@@ -63,69 +55,64 @@
     self = [super init];
     if (!self) return(nil);
     
-    // Enable touch handling on scene node
-    self.userInteractionEnabled = YES;
+    // Initialize arrays
+    actualEnemies = [[NSMutableArray alloc] init];
+    actualCrystalSets = [[NSMutableArray alloc] init];
     
-    // Create a colored background (Dark Grey)
-    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
-    [self addChild:background];
-    background.zOrder = 0;
+    // Create moveable touch layer
+    touchLayer = [TouchLayer createTouchLayer];
+    [self addChild:touchLayer];
     
     // Create physics
     _physicsWorld = [CCPhysicsNode node];
     _physicsWorld.gravity = ccp(0,0);
     _physicsWorld.debugDraw = NO;
-    _physicsWorld.collisionDelegate = self;
+    _physicsWorld.collisionDelegate = [PhysicsCollisionDelegate delegate];
     [self addChild:_physicsWorld];
     
-    // Add green circle
-    greencircle = [CCSprite spriteWithImageNamed:@"Circle.png"];
-    greencircle.position = ccp(self.contentSize.width/2,self.contentSize.height/2);
-    greencircle.zOrder = 1;
-    greencircle.opacity = .2f;
-    
-    // Add red circle
-    redcircle = [CCSprite spriteWithImageNamed:@"redcircle.png"];
-    redcircle.position = ccp(self.contentSize.width/2,self.contentSize.height/2);
-    redcircle.zOrder = 1;
-    redcircle.opacity = .2f;
-    
-    // Add Aquila
+    // Create Aquila
     _aquila = [Aquila spriteWithImageNamed:@"sword.png"];
     [_aquila initAquila: ccp(self.contentSize.width/2,self.contentSize.height/2)];
-    [_physicsWorld addChild:_aquila];
-    _aquila.currentWalk = NULL;
+    [_physicsWorld addChild:_aquila z:1 name:@"aquila"];
+    prevAquilaLocation = _aquila.position;
     
-    // Add dumb monster
-    CGPoint startPos = ccp(self.contentSize.width/5,self.contentSize.height/5);
-    NSString* dumb_normal = @"megagrunt.png";
-    NSString* dumb_stunned = @"megagrunt_stunned.png";
-    _dumbmonster = [AIActor spriteWithImageNamed:dumb_normal];
-    PatrollingAIBehavior *behavior = [[PatrollingAIBehavior alloc] initWithPoints:startPos :
-    ccp(self.contentSize.width/5, 4*self.contentSize.height/5) monster:_dumbmonster];
-    [_dumbmonster initWithBehavior:behavior :startPos normalSprite:dumb_normal stunnedSprite:dumb_stunned];
-    [_physicsWorld addChild:_dumbmonster];
-    [_dumbmonster startAI];
+    // Create enemies
+    // _enemies is an array, where each element contains an array of information on an enemy
+    for (int i = 0; i < [_enemies count]; i++) {
+        NSArray* enemyInfo = [_enemies objectAtIndex:i];
+        EnemyType type = [[enemyInfo objectAtIndex:0] integerValue];
+        CGPoint startPos = [[enemyInfo objectAtIndex:1] CGPointValue];
+        int behav = [[enemyInfo objectAtIndex:2] integerValue];
+        AIActor *enemy = [AIActor spriteWithImageNamed:[AIActor getSprite:type state:Normal]];
+        if (behav == 0) {
+            PatrollingAIBehavior *behavior = [[PatrollingAIBehavior alloc] initWithPoints:startPos :
+                                             ccp(self.contentSize.width/5, 4*self.contentSize.height/5) monster:enemy];
+            [enemy initWithBehavior:behavior :startPos type:type];
+        }
+        else {
+            FollowAIBehavior *behavior = [[FollowAIBehavior alloc] init:_aquila :enemy];
+            [enemy initWithBehavior:behavior :startPos type:type];
+        }
+        [enemy startAI];
+        [_physicsWorld addChild:enemy];
+        [actualEnemies addObject:enemy ];
+    }
     
-    // Add another monster
-    CGPoint startPos2 = ccp(self.contentSize.width/2,4*self.contentSize.height/5);
-    NSString* other_normal = @"monster2.png";
-    NSString* other_stunned = @"monster2_stunned.png";
-    _othermonster = [AIActor spriteWithImageNamed:other_normal];
-    FollowAIBehavior *otherbehavior = [[FollowAIBehavior alloc] init:_aquila :_othermonster];
-    [_othermonster initWithBehavior:otherbehavior :startPos2 normalSprite:other_normal stunnedSprite:other_stunned];
-    [_physicsWorld addChild:_othermonster];
-    [_othermonster startAI];
     
-    // Add third monster
-    CGPoint startPos3 = ccp(3*self.contentSize.width/4,self.contentSize.height/4);
-    NSString* third_normal = @"monster2.png";
-    NSString* third_stunned = @"monster2_stunned.png";
-    _thirdmonster = [AIActor spriteWithImageNamed:third_normal];
-    FollowAIBehavior *thirdbehavior = [[FollowAIBehavior alloc] init:_aquila :_thirdmonster];
-    [_thirdmonster initWithBehavior:thirdbehavior :startPos3 normalSprite:third_normal stunnedSprite:third_stunned];
-    solved = false;
+    //@property (readonly, assign) NSArray *_crystals;
+    // Create crystals
+    for (int i = 0; i < [_crystals count]; i++) {
+        NSArray* crystalSetInfo = [_crystals objectAtIndex:i];
+        
+        NSArray* positions = [crystalSetInfo objectAtIndex:0];
+        NSArray* states = [crystalSetInfo objectAtIndex:1];
+        NSArray* links = [crystalSetInfo objectAtIndex:2];
+        
+        CrystalSet* c = [CrystalSet createCrystalSet:positions initialStates:states physicsNode:_physicsWorld linkedCrystals:links level:self];
+        [actualCrystalSets addObject:c];
+    }
     
+    /*
     // Create crystals
     // Positions
     NSValue *loc1 = [NSValue valueWithCGPoint:ccp(self.contentSize.width/2, self.contentSize.height/5)];
@@ -147,19 +134,20 @@
      The Pink Crystal activates the Purple Crystal as well.
      The Purple Crystal activates the Orange Crystal as well.
      The Blue Crystal activates both the Orange and Pink Crystals as well.
-     */
+     
     NSArray *link1 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:1], nil];
     NSArray *link2 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:2], nil];
     NSArray *link3 = [[NSArray alloc] initWithObjects: nil];
     NSArray *link4 = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
-                                                      [NSNumber numberWithInt:2], nil];
-                      
+                      [NSNumber numberWithInt:2], nil];
+    
     NSArray* crystalPositions = [[NSArray alloc] initWithObjects:loc1, loc2, loc3, loc4, nil];
     NSArray* crystalStates = [[NSArray alloc] initWithObjects:state1,state2,state3,state4,nil];
     NSArray* crystalLinks = [[NSArray alloc] initWithObjects:link1, link2,link3,link4, nil];
     
     _crystals = [CrystalSet createCrystalSet:crystalPositions initialStates:crystalStates physicsNode:_physicsWorld linkedCrystals:crystalLinks level:self];
     
+    */
     
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
@@ -174,15 +162,9 @@
     debugButton.position = ccp(0.90f, 0.05f); // Bottom Right of screen
     [debugButton setTarget:self selector:@selector(onDebugClicked:)];
     [self addChild:debugButton];
-
-    walking = false;
-    ignore = false;
     
-    // done
 	return self;
 }
-
-// -----------------------------------------------------------------------
 
 - (void)dealloc
 {
@@ -212,39 +194,68 @@
     [super onExit];
 }
 
-- (void)doneWalking {
-    _aquila.currentWalk = NULL;
-    CCLOG(@"%s", "done walking");
-}
+// -----------------------------------------------------------------------
+#pragma mark - Update method
+// -----------------------------------------------------------------------
 
--(void) solvedCrystals {
-    if (!solved) {
-        CCLOG(@"Solved");
-        [_physicsWorld addChild:_thirdmonster];
-        [_thirdmonster startAI];
-        solved = true;
+- (void)update:(CCTime)delta {
+    
+    // Update screen position
+    float xChange = -(_aquila.position.x - prevAquilaLocation.x);
+    float yChange = -(_aquila.position.y - prevAquilaLocation.y);
+    prevAquilaLocation = _aquila.position;
+    CGPoint aquilaChange = ccp(xChange, yChange);
+    self.position = ccpAdd(self.position, aquilaChange);
+    touchLayer.position = _aquila.position;
+    
+    for (CrystalSet *set in actualCrystalSets) {
+        if ([set doSomething]) {
+            
+            //TODO: Something to do when all the crystals are on
+            // !
+            CCLabelTTF *label = [CCLabelTTF labelWithString:@"!" fontName:@"Chalkduster" fontSize:150.0f];
+            label.positionType = CCPositionTypeNormalized;
+            label.color = [CCColor greenColor];
+            label.position = ccp(0.5f, 0.8f); // Middle of screen
+            [self addChild:label];
+            CCActionRemove *remove = [CCActionRemove action];
+            CCActionDelay *delay = [CCActionDelay actionWithDuration:AI_STUN_DURATION];
+            CCActionSequence *sequence = [CCActionSequence actionWithArray:@[delay, remove]];
+            [label runAction:sequence];
+            
+        }
     }
-    
-    // !
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"!" fontName:@"Chalkduster" fontSize:150.0f];
-    label.positionType = CCPositionTypeNormalized;
-    label.color = [CCColor greenColor];
-    label.position = ccp(0.5f, 0.8f); // Middle of screen
-    [self addChild:label];
-    CCActionRemove *remove = [CCActionRemove action];
-    CCActionDelay *delay = [CCActionDelay actionWithDuration:AI_STUN_DURATION];
-    CCActionSequence *sequence = [CCActionSequence actionWithArray:@[delay, remove]];
-    [label runAction:sequence];
-    
 }
 
 // -----------------------------------------------------------------------
-#pragma mark - Touch Handler
+#pragma mark - Instance methods
+// -----------------------------------------------------------------------
+
+-(void) gameOver {
+    // Title
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"You died" fontName:@"Chalkduster" fontSize:50.0f];
+    label.positionType = CCPositionTypeNormalized;
+    label.color = [CCColor redColor];
+    label.position = ccp(0.5f, 0.8f); // Middle of screen
+    [_physicsWorld removeChild:_aquila];
+    [self addChild:label];
+    
+    // Create a reset button
+    CCButton *resetButton = [CCButton buttonWithTitle:@"Reset" fontName:@"Verdana-Bold" fontSize:25.0f];
+    resetButton.positionType = CCPositionTypeNormalized;
+    resetButton.position = ccp(0.5f, 0.7f); // Top Right of screen
+    [resetButton setTarget:self selector:@selector(onResetClicked:)];
+    [self addChild:resetButton];
+}
+
+// -----------------------------------------------------------------------
+#pragma mark - Touch Handler for touchLayer
 // -----------------------------------------------------------------------
 
 -(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     if (_aquila.state == Standing || _aquila.state == Walking) {
-        _aquila.state = Walking;
+        
+        // Calculate angle, distance and actions
         CGPoint targetPoint = [touch locationInNode:self];
         CGPoint startPoint = _aquila.position;
         walkTarget = targetPoint;
@@ -275,25 +286,23 @@
             angle_change = 360 - fabsf(angle_change);
         }
         float duration = distance/AQUILA_WALK_SPEED;
-        CCActionMoveTo *walkMove = [CCActionMoveTo  actionWithDuration:duration position:targetPoint];
-        CCActionRotateBy* actionSpin = [CCActionRotateBy actionWithDuration:0.3f angle:
-                                        angle_change];
-        CCActionCallFunc *update_status = [CCActionCallFunc actionWithTarget:self selector:NSSelectorFromString(@"doneWalking")];
-        CCActionSequence *actions = [CCActionSequence actionWithArray:@[walkMove, update_status]];
         
-        [_aquila stopAllActions];
-        [_aquila runAction: actionSpin];
-        [_aquila runAction: actions];
-        _aquila.currentWalk = actions;
+        CCActionMoveTo *walkMove = [CCActionMoveTo  actionWithDuration:duration position:targetPoint];
+        CCActionRotateTo* actionSpin = [CCActionRotateBy actionWithDuration:AQUILA_ROTATE_DURATION angle: angle_change];
+        
+        [_aquila walk:walkMove rotate:actionSpin];
+        
         // Log touch location
         CCLOG(@"Aquila walking to @ %@",NSStringFromCGPoint(targetPoint));
-
-    }    
+        
+    }
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
     if (_aquila.state == Walking) {
+        
+        // Calculate angle, distance and actions
         CGPoint targetPoint = [touch locationInNode:self];
         CGPoint startPoint = _aquila.position;
         float change = ccpDistance(targetPoint, walkTarget);
@@ -328,18 +337,12 @@
             angle_change = 360 - fabsf(angle_change);
         }
         float duration = distance/AQUILA_WALK_SPEED;
+        
         CCActionMoveTo *walkMove = [CCActionMoveTo  actionWithDuration:duration position:targetPoint];
-        CCActionRotateBy* actionSpin = [CCActionRotateBy actionWithDuration:0.3f angle:
-                                        angle_change];
-        CCActionCallFunc *update_status = [CCActionCallFunc actionWithTarget:self selector:NSSelectorFromString(@"doneWalking")];
-        CCActionSequence *actions = [CCActionSequence actionWithArray:@[walkMove, update_status]];
+        CCActionRotateTo* actionSpin = [CCActionRotateBy actionWithDuration:AQUILA_ROTATE_DURATION angle: angle_change];
         
+        [_aquila walk:walkMove rotate:actionSpin];
         
-        [_aquila stopAllActions];
-        [_aquila runAction: actionSpin];
-        [_aquila runAction: actions];
-        
-        _aquila.currentWalk = actions;
         // Log touch location
         CCLOG(@"Aquila walking to @ %@",NSStringFromCGPoint(targetPoint));
         
@@ -347,61 +350,13 @@
 }
 
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    if (_aquila.state == Walking) {
-        
-        
-    }
-}
-
--(void) gameOver {
-    // Title
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"You died" fontName:@"Chalkduster" fontSize:50.0f];
-    label.positionType = CCPositionTypeNormalized;
-    label.color = [CCColor redColor];
-    label.position = ccp(0.5f, 0.8f); // Middle of screen
-    [_physicsWorld removeChild:_aquila];
-    [self addChild:label];
     
-    // Create a reset button
-    CCButton *resetButton = [CCButton buttonWithTitle:@"Reset" fontName:@"Verdana-Bold" fontSize:25.0f];
-    resetButton.positionType = CCPositionTypeNormalized;
-    resetButton.position = ccp(0.5f, 0.7f); // Top Right of screen
-    [resetButton setTarget:self selector:@selector(onResetClicked:)];
-    [self addChild:resetButton];
+    return;
+}
+
+-(void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event {
     
-}
-
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair monsterCollision:(AIActor *)monster aquilaCollision:(Aquila *)aqui {
-    CCLOG(@"Aquilla collided with monster");
-    if (aqui.state != Dashing && monster.state == Normal) {
-        [self gameOver];
-    }
-    else if (aqui.state == Dashing)
-    {
-        [monster stun];
-        CCActionCallFunc *unstun = [CCActionCallFunc actionWithTarget:monster selector:@selector(restartAI)];
-        CCActionDelay *delay = [CCActionDelay actionWithDuration:AI_STUN_DURATION];
-        CCActionSequence *sequence = [CCActionSequence actionWithArray:@[delay, unstun]];
-        [monster runAction:sequence];
-    }
-    return YES;
-}
-
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal {
-    CCLOG(@"Aquilla collided with crystal");
-    [_aquila stopAllActions];
-    _aquila.state = Standing;
-    [crystal flipState:true];
-    return YES;
-}
-
-- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event {
-    
-}
-
-- (void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal {
-    CCLOG(@"Aquilla seperated from crystal");
-    
+    return;
 }
 
 // -----------------------------------------------------------------------
@@ -417,14 +372,14 @@
 
 - (void)onResetClicked:(id)sender
 {
-    // back to demo scene with transition
-    [[CCDirector sharedDirector] replaceScene:[DemoScene scene]
+    // Restart level
+    [[CCDirector sharedDirector] replaceScene: self
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:0.5f]];
 }
 
 - (void)onDebugClicked:(id)sender
 {
-    
+    // TODO: Buggy
     if (_physicsWorld.debugDraw == true) {
         _physicsWorld.debugDraw = NO;
         CCLOG(@"%s", "Was YES, now NO");
@@ -438,6 +393,6 @@
         CCLOG(@"%s", "wtf");
     }
 }
-
 // -----------------------------------------------------------------------
+
 @end

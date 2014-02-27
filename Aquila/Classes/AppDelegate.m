@@ -9,7 +9,6 @@
 
 #import "AppDelegate.h"
 #import "IntroScene.h"
-#import "DemoScene.h"
 
 @implementation AppDelegate
 
