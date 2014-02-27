@@ -8,6 +8,7 @@
 
 #import "CrystalSet.h"
 #import "Crystal.h"
+#import "Constants.h"
 
 // -----------------------------------------------------------------------
 #pragma mark CrystalSet
@@ -47,7 +48,7 @@
         }
         
         NSString* image;
-        image = state ? @"ice_crystal1.png" : @"ice_crystal_off1.png";
+        image = state ? CRYSTAL_ON : CRYSTAL_OFF;
         Crystal *c = [Crystal spriteWithImageNamed:image];
         CCLOG(@"Created crystal at position %@ with state %d", NSStringFromCGPoint(position), state);
         [c initCrystal: position startState:state crystalSet:self];

@@ -29,15 +29,15 @@ static const float SLOW_SPEED = 100;
 
 // Sprites
 
-static const NSString* AQUILA = @"sword.png";
+static NSString* const AQUILA = @"sword.png";
 
-static const NSString* MEGAGRUNT = @"megagrunt.png";
-static const NSString* MEGAGRUNT_STUNNED = @"megagrunt_stunned.png";
-static const NSString* GAMEnWATCH = @"monster2.png";
-static const NSString* GAMEnWATCH_STUNNED = @"monster2_stunned.png";
+static NSString* const MEGAGRUNT = @"megagrunt.png";
+static NSString* const MEGAGRUNT_STUNNED = @"megagrunt_stunned.png";
+static NSString* const GAMEnWATCH = @"monster2.png";
+static NSString* const GAMEnWATCH_STUNNED = @"monster2_stunned.png";
 
-static const NSString* CRYSTAL_ON = @"ice_crystal1.png";
-static const NSString* CRYSTAL_OFF = @"ice_crystal_off1.png";
+static NSString* const CRYSTAL_ON = @"ice_crystal1.png";
+static NSString* const CRYSTAL_OFF = @"ice_crystal_off1.png";
 
 //static const NSString *NewtonSphereCollisionOutline = @"outline";
 //static const NSString *NewtonSphereCollisionRope = @"rope";

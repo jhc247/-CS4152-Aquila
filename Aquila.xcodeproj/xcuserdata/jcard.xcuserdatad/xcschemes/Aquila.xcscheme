@@ -60,21 +60,26 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "NSAutoreleaseFreedObjectCheckEnabled"
-            value = "NO"
+            value = "YES"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSZombieEnabled"
-            value = "NO"
+            value = "YES"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "NSDebugEnabled"
-            value = "NO"
+            value = "YES"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>
+         <AdditionalOption
+            key = "OBJC_PRINT_EXCEPTIONS"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction

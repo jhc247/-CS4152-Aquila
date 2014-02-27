@@ -27,7 +27,7 @@ static PhysicsCollisionDelegate *delegate;
     return delegate;
 }
 
-+ (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila Monster:(AIActor *)monster {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila monsterCollision:(AIActor *)monster {
     
     CCLOG(@"Aquila collided with a monster");
     if (aquila.state != Dashing && monster.state == Normal) {
@@ -41,11 +41,10 @@ static PhysicsCollisionDelegate *delegate;
         CCActionSequence *sequence = [CCActionSequence actionWithArray:@[delay, unstun]];
         [monster runAction:sequence];
     }
-    
     return YES;
 }
 
-+ (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal {
     
     CCLOG(@"Aquila collided with a crystal");
     [aquila stand];

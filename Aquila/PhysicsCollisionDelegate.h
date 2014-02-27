@@ -12,9 +12,9 @@
 #import "AIActor.h"
 #import "Crystal.h"
 
-static const NSString* aquilaCollisionType = @"aquilaCollision";
-static const NSString* monsterCollisionType = @"monsterCollision";
-static const NSString* crystalCollisionType = @"crystalCollision";
+static NSString* const aquilaCollisionType = @"aquilaCollision";
+static NSString* const monsterCollisionType = @"monsterCollision";
+static NSString* const crystalCollisionType = @"crystalCollision";
 
 
 @interface PhysicsCollisionDelegate : NSObject <CCPhysicsCollisionDelegate>
@@ -22,8 +22,8 @@ static const NSString* crystalCollisionType = @"crystalCollision";
 + (PhysicsCollisionDelegate*) delegate;
 
 // Aquila Collisions
-+ (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila Monster:(AIActor *)monster;
-+ (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal;
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila Monster:(AIActor *)monster;
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair aquilaCollision:(Aquila *)aquila crystalCollision:(Crystal *)crystal;
 
 
 @end

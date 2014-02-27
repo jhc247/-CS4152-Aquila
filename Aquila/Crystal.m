@@ -65,12 +65,12 @@
     if (self.state == On) {
         self.state = Off;
         [_crystalSet incrementOff];
-        newSprite = @"ice_crystal_off1.png";
+        newSprite = CRYSTAL_OFF;
     }
     else {
         self.state = On;
         [_crystalSet incrementOn];
-        newSprite = @"ice_crystal1.png";
+        newSprite = CRYSTAL_ON;
     }
     [self setTexture:[[CCSprite spriteWithImageNamed:newSprite] texture]];
     if (flipOthers) {

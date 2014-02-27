@@ -11,13 +11,13 @@
 
 // -----------------------------------------------------------------------
 
-@interface LevelScene : CCScene
+@interface LevelScene : CCScene <CCPhysicsCollisionDelegate>
 
 // -----------------------------------------------------------------------
 
 @property (nonatomic, readonly, assign) CGPoint AquilaStart;
-@property (nonatomic, assign) NSArray *enemies;
-@property (nonatomic, assign) NSArray *crystals;
+@property (nonatomic, assign) int** enemies;
+@property (nonatomic, strong) NSArray *crystals;
 
 
 // -----------------------------------------------------------------------

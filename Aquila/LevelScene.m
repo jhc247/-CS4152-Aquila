@@ -6,6 +6,8 @@
 //  Copyright 2014 Seven Layer Games. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import "cocos2d.h"
 #import "LevelScene.h"
 #import "IntroScene.h"
 #import "Constants.h"
@@ -33,9 +35,12 @@
     
     NSMutableArray* actualEnemies;
     NSMutableArray* actualCrystalSets;
-    
+
     CGPoint walkTarget;
     CGPoint prevAquilaLocation;
+    
+    float level_width; // multiplier for screen size
+    float level_height;
 }
 
 // -----------------------------------------------------------------------
@@ -55,6 +60,26 @@
     self = [super init];
     if (!self) return(nil);
     
+    //////// Hard coded level //////////
+    
+    float width = self.contentSize.width;
+    float height = self.contentSize.height;
+    
+    level_width = 1.5;
+    level_height = 1.5;
+    _AquilaStart = ccp(.5*width, .5*height);
+    
+    //Format:       {EnemyType, startX, startY, behavior(0=follow,1=patroll),
+    //               patrolpt1_x, patrolpt1_y, patrolpt2_x, patrolpt2_y};
+    int numEnemies = 2; // <---- Update this field when adding
+    _enemies = (int**)malloc(numEnemies*sizeof(int*));
+    int enemy1[8] = {Megagrunt, (int)width, (int)(height/2), 1, -1, -1, -1, -1};
+    int enemy2[8] = {Megagrunt, (int)(width/2), (int)height, 0, 0, (int)width, (int)height};
+
+    _enemies[0] = enemy1;
+    _enemies[1] = enemy2;
+
+    
     // Initialize arrays
     actualEnemies = [[NSMutableArray alloc] init];
     actualCrystalSets = [[NSMutableArray alloc] init];
@@ -71,35 +96,16 @@
     [self addChild:_physicsWorld];
     
     // Create Aquila
-    _aquila = [Aquila spriteWithImageNamed:@"sword.png"];
-    [_aquila initAquila: ccp(self.contentSize.width/2,self.contentSize.height/2)];
-    [_physicsWorld addChild:_aquila z:1 name:@"aquila"];
+    _aquila = [Aquila spriteWithImageNamed:AQUILA];
+    [_aquila initAquila: _AquilaStart];
+    touchLayer.position = _AquilaStart;
+    self.position = ccp(-_AquilaStart.x+width/2, -_AquilaStart.y+height/2);
+    [_physicsWorld addChild:_aquila z:10 name:@"aquila"];
     prevAquilaLocation = _aquila.position;
     
     // Create enemies
-    // _enemies is an array, where each element contains an array of information on an enemy
-    for (int i = 0; i < [_enemies count]; i++) {
-        NSArray* enemyInfo = [_enemies objectAtIndex:i];
-        EnemyType type = [[enemyInfo objectAtIndex:0] integerValue];
-        CGPoint startPos = [[enemyInfo objectAtIndex:1] CGPointValue];
-        int behav = [[enemyInfo objectAtIndex:2] integerValue];
-        AIActor *enemy = [AIActor spriteWithImageNamed:[AIActor getSprite:type state:Normal]];
-        if (behav == 0) {
-            PatrollingAIBehavior *behavior = [[PatrollingAIBehavior alloc] initWithPoints:startPos :
-                                             ccp(self.contentSize.width/5, 4*self.contentSize.height/5) monster:enemy];
-            [enemy initWithBehavior:behavior :startPos type:type];
-        }
-        else {
-            FollowAIBehavior *behavior = [[FollowAIBehavior alloc] init:_aquila :enemy];
-            [enemy initWithBehavior:behavior :startPos type:type];
-        }
-        [enemy startAI];
-        [_physicsWorld addChild:enemy];
-        [actualEnemies addObject:enemy ];
-    }
+    [self createEnemies:numEnemies];
     
-    
-    //@property (readonly, assign) NSArray *_crystals;
     // Create crystals
     for (int i = 0; i < [_crystals count]; i++) {
         NSArray* crystalSetInfo = [_crystals objectAtIndex:i];
@@ -125,7 +131,7 @@
     NSNumber *state3 = [NSNumber numberWithInt:On];
     NSNumber *state4 = [NSNumber numberWithInt:On];
     // Links
-    /*
+    
      Pink Crystal = Crystal 1    linked to: 2
      Purple Crystal = Crystal 2  linked to: 3
      Orange Crystal = Crystal 3  linked to:
@@ -194,19 +200,68 @@
     [super onExit];
 }
 
+- (void) createEnemies: (int)size {
+    // _enemies is an array, where each element contains an array of information on an enemy
+    for (int i = 0; i < size; i++) {
+        int* enemyInfo = _enemies[i];
+        EnemyType type = enemyInfo[0];
+        int startx = enemyInfo[1];
+        int starty = enemyInfo[2];
+        CGPoint startPos = ccp(startx, starty);
+        int behav = enemyInfo[3];
+        CCLOG(@"HI");
+        AIActor *enemy = [AIActor spriteWithImageNamed:[AIActor getSprite:type state:Normal]];
+        if (behav == 0) {
+            int p1x = enemyInfo[4];
+            int p1y = enemyInfo[5];
+            CGPoint p1 = ccp(p1x, p1y);
+            
+            int p2x = enemyInfo[6];
+            int p2y = enemyInfo[7];
+            CGPoint p2 = ccp(p2x, p2y);
+            PatrollingAIBehavior *behavior = [[PatrollingAIBehavior alloc] initWithPoints:p1 :
+                                              p2 monster:enemy];
+            [enemy initWithBehavior:behavior :startPos type:type];
+        }
+        else {
+            FollowAIBehavior *behavior = [[FollowAIBehavior alloc] init:_aquila :enemy];
+            [enemy initWithBehavior:behavior :startPos type:type];
+        }
+        [enemy startAI];
+        [_physicsWorld addChild:enemy];
+        [actualEnemies addObject:enemy ];
+    }
+}
+
+
 // -----------------------------------------------------------------------
 #pragma mark - Update method
 // -----------------------------------------------------------------------
 
 - (void)update:(CCTime)delta {
-    
+
     // Update screen position
     float xChange = -(_aquila.position.x - prevAquilaLocation.x);
     float yChange = -(_aquila.position.y - prevAquilaLocation.y);
     prevAquilaLocation = _aquila.position;
     CGPoint aquilaChange = ccp(xChange, yChange);
-    self.position = ccpAdd(self.position, aquilaChange);
-    touchLayer.position = _aquila.position;
+    float width = self.contentSize.width;
+    float height = self.contentSize.height;
+    float totalwidth = level_width*width;
+    float totalheight = level_height*height;
+    
+    if (_aquila.position.x >= width/2 &&
+        _aquila.position.x <= totalwidth - width/2) {
+        self.position = ccp((self.position.x + aquilaChange.x), self.position.y);
+        touchLayer.position = _aquila.position;
+    }
+    if (_aquila.position.y >= height/2 &&
+        _aquila.position.y <= totalheight - height/2) {
+        self.position = ccp(self.position.x, (self.position.y + aquilaChange.y));
+        touchLayer.position = _aquila.position;
+    }
+    
+    
     
     for (CrystalSet *set in actualCrystalSets) {
         if ([set doSomething]) {

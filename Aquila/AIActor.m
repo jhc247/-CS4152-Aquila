@@ -24,7 +24,7 @@
         case Game_N_Watch:
             return (state == Normal) ? GAMEnWATCH : GAMEnWATCH_STUNNED;
         default:
-            break;
+            return NULL;
     }
 }
 

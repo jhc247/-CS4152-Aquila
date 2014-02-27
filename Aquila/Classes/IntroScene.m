@@ -50,14 +50,14 @@
     controlsButton.positionType = CCPositionTypeNormalized;
     controlsButton.position = ccp(0.25f, 0.35f);
     [controlsButton setTarget:self selector:@selector(onControlsClicked:)];
-    [self addChild:controlsButton];
+    //[self addChild:controlsButton];
     
     // Monster
     CCButton *monsterButton = [CCButton buttonWithTitle:@"[ Monsters ]" fontName:@"Verdana-Bold" fontSize:30.0f];
     monsterButton.positionType = CCPositionTypeNormalized;
     monsterButton.position = ccp(0.5f, 0.35f);
     [monsterButton setTarget:self selector:@selector(onMonsterClicked:)];
-    [self addChild:monsterButton];
+    //[self addChild:monsterButton];
     
     // Demo
     CCButton *playButton = [CCButton buttonWithTitle:@"[ Demo ]" fontName:@"Verdana-Bold" fontSize:30.0f];
